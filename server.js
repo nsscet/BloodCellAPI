@@ -41,7 +41,22 @@ router.get('/' , function(req , res){
   res.json({ message : "Welcome to Node.js API" });
 })
 
+
+router.route('/bears').post(function(req,res){
+  var bear = new Bear();
+  bear.name = req.body.name;
+  //saving
+  bear.save(function(err){
+    if(err){
+      res.send(err);
+    }
+
+    res.json({message: "New item created"});
+  })
+})
+
 app.use('/api' , router)
+
 
 app.listen(port)
 
