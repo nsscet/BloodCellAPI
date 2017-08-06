@@ -6,17 +6,21 @@ var app = express()
 var bodyParser = require('body-parser')
 var mongo = require('mongodb')
 var logger = require('morgan')
+var mongoose = require('mongoose')
+
 var router = require('./routes/routes.js')
 
 //connecting to db
-var MongoClient = require('mongodb').MongoClient;
+// var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/api"
 
-MongoClient.connect(url , function(err , db){
-  if(err) throw err;
-  console.log("database created");
-  db.close()
-})
+// MongoClient.connect(url , function(err , db){
+//   if(err) throw err;
+//   console.log("database created");
+//   db.close()
+// })
+
+mongoose.connect(url)
 
 //configure bodyParser
 app.use(bodyParser.urlencoded({ extended: true}))
@@ -27,9 +31,9 @@ var port = process.env.port || 8080;
 
 
 var Bear = require('./app/models/bear')
-
-var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/api')
+//
+// var mongoose = require('mongoose')
+// mongoose.connect('mongodb://localhost:27017/api')
 
 //router
 
