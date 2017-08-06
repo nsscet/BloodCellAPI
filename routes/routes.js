@@ -4,28 +4,45 @@
 
 var mongo = require('mongodb')
 var express = require('express')
+var mongoose = require('mongoose')
 
-var Bear = require('../app/models/bear')
 
+var User = require('../app/models/user')
 
-var Server = mongo.Server;
-var Db = mongo.Db;
-var BSON = mongo.BSONPure;
+// var url = "mongodb://localhost:27017/api"
+// mongoose.connect(url)
 
-var server = new Server('localhost' , 27017 , {auto_reconnect:true})
-var db = new Db('api' , server)
+// var Server = mongo.Server;
+// var Db = mongo.Db;
+// var BSON = mongo.BSONPure;
+//
+// var server = new Server('localhost' , 27017 , {auto_reconnect:true})
+// var db = new Db('api' , server)
 
-db.open(function(err,db){
-  if(!err){
-    console.log("Connected to database");
-    db.collection('donation' , {strict:true} , function(err , collection){
-      if(err){
-        console.log("The donor collection doesnot exist... creating it with sample data");
-        // populateDB(); TODO
-      }
-    })
-  }
-})
+// db.open(function(err,db){
+//   if(!err){
+//     console.log("Connected to database " + db);
+//     db.collection('donation' , {strict:true} , function(err , collection){
+//       if(err){
+//         console.log("The donation collection doesnot exist... creating it with sample data");
+//         // populateDB(); TODO
+//       }
+//     })
+//   }
+// })
+// db.open(function(err , db){
+//   // console.log(db);
+//   if(!err){
+//     console.log("Connected to database");
+//     db.collection('login' , {strict:true} , function(err, collection){
+//       // console.log(collection);
+//       if (err) {
+//         console.log("The 'login' collection doesn't exist. Creating it with sample data...");
+//         populateDB();
+//       }
+//     })
+//   }
+// })
 
 var router = express.Router();
 
@@ -39,19 +56,37 @@ router.get('/' , function(req , res){
   res.json({ message : "Welcome to Node.js API" });
 })
 
+router.post('/users' , function(req , res){
+  var user = new User();
+  user.username = req.body.username;
+  user.password = req.body.password;
+  // console.log(user);
+  // console.log(user);
 
-router.route('/bears').post(function(req,res){
-  var bear = new Bear();
-  bear.name = req.body.name;
-  //saving
-  bear.save(function(err){
+  user.save(function(err){
+    // console.log("inside post route");
     if(err){
-      res.send(err);
+      console.log(err);
+      res.json(err)
     }
-
-    res.json({message: "New item created"});
+    else{
+      console.log(user);
+      res.send("user created successfully")
+    }
   })
-})
 
+})
+// router.route('/users').post(function(req,res){
+//   var user = new User();
+//   user.name = req.body.name;
+//   //saving
+//   user.save(function(err){
+//     if(err){
+//       res.send(err);
+//     }
+//
+//     res.json({message: "New item created"});
+//   })
+// })
 
 module.exports = router;
