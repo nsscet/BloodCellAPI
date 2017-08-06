@@ -7,20 +7,17 @@ var bodyParser = require('body-parser')
 var mongo = require('mongodb')
 var logger = require('morgan')
 var mongoose = require('mongoose')
+mongoose.Promise = global.Promise;
 
 var router = require('./routes/routes.js')
 
 //connecting to db
-// var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/api"
 
-// MongoClient.connect(url , function(err , db){
-//   if(err) throw err;
-//   console.log("database created");
-//   db.close()
-// })
 
-mongoose.connect(url)
+var connection = mongoose.createConnection(url, {auto_reconnect:true})
+connection.on('error', console.error.bind(console, 'connection error:'));
+
 
 //configure bodyParser
 app.use(bodyParser.urlencoded({ extended: true}))
@@ -28,12 +25,6 @@ app.use(bodyParser.json())
 app.use(logger('dev'));
 
 var port = process.env.port || 8080;
-
-
-var Bear = require('./app/models/bear')
-//
-// var mongoose = require('mongoose')
-// mongoose.connect('mongodb://localhost:27017/api')
 
 //router
 

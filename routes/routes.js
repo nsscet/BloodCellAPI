@@ -1,7 +1,3 @@
-// //import mongo from 'mongodb'
-// var routes = {}
-// export default routes;
-
 var mongo = require('mongodb')
 var express = require('express')
 var mongoose = require('mongoose')
@@ -9,40 +5,6 @@ var mongoose = require('mongoose')
 
 var User = require('../app/models/user')
 
-// var url = "mongodb://localhost:27017/api"
-// mongoose.connect(url)
-
-// var Server = mongo.Server;
-// var Db = mongo.Db;
-// var BSON = mongo.BSONPure;
-//
-// var server = new Server('localhost' , 27017 , {auto_reconnect:true})
-// var db = new Db('api' , server)
-
-// db.open(function(err,db){
-//   if(!err){
-//     console.log("Connected to database " + db);
-//     db.collection('donation' , {strict:true} , function(err , collection){
-//       if(err){
-//         console.log("The donation collection doesnot exist... creating it with sample data");
-//         // populateDB(); TODO
-//       }
-//     })
-//   }
-// })
-// db.open(function(err , db){
-//   // console.log(db);
-//   if(!err){
-//     console.log("Connected to database");
-//     db.collection('login' , {strict:true} , function(err, collection){
-//       // console.log(collection);
-//       if (err) {
-//         console.log("The 'login' collection doesn't exist. Creating it with sample data...");
-//         populateDB();
-//       }
-//     })
-//   }
-// })
 
 var router = express.Router();
 
@@ -60,33 +22,17 @@ router.post('/users' , function(req , res){
   var user = new User();
   user.username = req.body.username;
   user.password = req.body.password;
-  // console.log(user);
-  // console.log(user);
-
   user.save(function(err){
-    // console.log("inside post route");
     if(err){
-      console.log(err);
-      res.json(err)
+      return console.log(err);
     }
     else{
-      console.log(user);
-      res.send("user created successfully")
+      console.log("User created successfully");
     }
   })
 
+
 })
-// router.route('/users').post(function(req,res){
-//   var user = new User();
-//   user.name = req.body.name;
-//   //saving
-//   user.save(function(err){
-//     if(err){
-//       res.send(err);
-//     }
-//
-//     res.json({message: "New item created"});
-//   })
-// })
+
 
 module.exports = router;
