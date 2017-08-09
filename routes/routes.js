@@ -8,16 +8,14 @@ var User = require('../app/models/user')
 
 var router = express.Router();
 
-router.use(function(req,res,next){
-  console.log("Something is happening");
-  next();
-})
-
 
 router.get('/' , function(req , res){
-  res.json({ message : "Welcome to Node.js API" });
+  res.send({ message : "Welcome to Node.js API" });
 })
 
+router.get('/users' , function(req,res){
+  console.log(User.find());
+});
 router.post('/users' , function(req , res){
   var user = new User();
   user.username = req.body.username;
@@ -27,6 +25,7 @@ router.post('/users' , function(req , res){
       return console.log(err);
     }
     else{
+      res.send({message:"User created successfully", "user":user})
       console.log("User created successfully");
     }
   })
