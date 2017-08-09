@@ -11,13 +11,29 @@ mongoose.Promise = global.Promise;
 
 
 //connecting to db
-mongoose.connect('mongodb://localhost/api')
+mongoose.connect('mongodb://localhost/api' , {useMongoClient:true})
 
 
-//configure 
+//configure
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 app.use(logger('dev'));
+
+//Passport for auth
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+passport.use(new LocalStrategy(function(username, password, done) {
+  process.nextTick(function() {
+    // Auth Check Logic
+  });
+}));
 
 
 //router
@@ -26,6 +42,9 @@ router.use(function(req,res,next){
   console.log("Something is happening");
   next();
 })
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/api' , router)
 
 //server

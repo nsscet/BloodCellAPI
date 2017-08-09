@@ -1,6 +1,6 @@
-var mongo = require('mongodb')
 var express = require('express')
 var mongoose = require('mongoose')
+var passport = require('passport')
 
 
 var User = require('../app/models/user')
@@ -16,6 +16,7 @@ router.get('/' , function(req , res){
 router.get('/users' , function(req,res){
   console.log(User.find());
 });
+
 router.post('/users' , function(req , res){
   var user = new User();
   user.username = req.body.username;
@@ -29,8 +30,20 @@ router.post('/users' , function(req , res){
       console.log("User created successfully");
     }
   })
+})
 
+router.post('/login' ,
+  passport.authenticate('local' , {
+    successRedirect: '/api/loginSuccess',
+    failureRediect: '/api/loginFailure'
+  }));
 
+router.get('/loginSuccess' , function(req, res, next){
+  res.send({message:"Authentication Success"})
+})
+
+router.get('/loginFailure' , function(req, res, next){
+  res.send({message:"Authentication Failed !!"})
 })
 
 
