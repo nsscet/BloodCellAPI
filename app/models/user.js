@@ -15,10 +15,17 @@ var User = module.exports = mongoose.model('User' , UserSchema);
 
 module.exports.createUser = function(newUser , callback){
 
-  User.findOne({username: newUser.username} , function(err,user){
+  User.findOne(
+    {
+      username: newUser.username
+    },
+    function(err,user){
     if(user){
-      // throw err({message: "User already exists"})
-      console.log("user already exists");
+      console.log("User already exists");
+      // callback;
+      var message = {message: "User already exists"}
+      // callback(null , message);
+      callback(null , message);
     }
     else{
       bcrypt.genSalt(10, function(err, salt) {

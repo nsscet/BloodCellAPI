@@ -7,34 +7,21 @@ var bodyParser = require('body-parser')
 var mongo = require('mongodb')
 var logger = require('morgan')
 var mongoose = require('mongoose')
+var passport = require('passport');
+
+var db = require('./config/db')
+
 mongoose.Promise = global.Promise;
 
 
 //connecting to db
-mongoose.connect('mongodb://localhost/api' , {useMongoClient:true})
+mongoose.connect(db.url , {useMongoClient:true})
 
 
-//configure
+//configuration
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 app.use(logger('dev'));
-
-//Passport for auth
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-passport.use(new LocalStrategy(function(username, password, done) {
-  process.nextTick(function() {
-    // Auth Check Logic
-  });
-}));
-
 
 //router
 var router = require('./routes/routes.js')
@@ -45,6 +32,8 @@ router.use(function(req,res,next){
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 app.use('/api' , router)
 
 //server
