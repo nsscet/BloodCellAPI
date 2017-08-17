@@ -8,6 +8,7 @@ var mongo = require('mongodb')
 var logger = require('morgan')
 var mongoose = require('mongoose')
 var passport = require('passport');
+var jwt = require('jsonwebtoken')
 
 var db = require('./config/db')
 
@@ -21,6 +22,7 @@ mongoose.connect(db.url , {useMongoClient:true})
 //configuration
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(logger('dev'));
 
 //router

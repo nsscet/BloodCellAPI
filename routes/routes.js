@@ -1,12 +1,10 @@
 var express = require('express')
 var mongoose = require('mongoose')
 var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcryptjs')
+// var LocalStrategy = require('passport-local').Strategy;
+// var bcrypt = require('bcryptjs')
 
 var User = require('../app/models/user')
-
-
 var router = express.Router();
 
 
@@ -32,15 +30,15 @@ router.route('/users')
   user.password = req.body.password;
   var callback = function(err , message){
     if(err)
-      throw err;
+    throw err;
 
     if(message)
-      res.send(message)
+    res.send(message)
 
     if(user)
-      res.send({
-        message:"User created" , user:user
-      })
+    res.send({
+      message:"User created" , user:user
+    })
 
 
   }
@@ -49,16 +47,13 @@ router.route('/users')
 
 
 //login route
-router.post('/login' ,
-passport.authenticate('local' , {
-  successRedirect: '/api/loginSuccess',
-  failureRediect: '/api/loginFailure'
-}));
+router.post('/login' , function(req, res, next){
+  User.verifyCredentials(req, res, next);
+});
 
 router.get('/loginSuccess' , function(req, res, next){
   res.send({message:"Authentication Success"})
 })
-
 router.get('/loginFailure' , function(req, res, next){
   res.send({message:"Authentication Failed !!"})
 })
