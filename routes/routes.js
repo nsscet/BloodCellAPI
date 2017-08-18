@@ -3,7 +3,11 @@ var mongoose = require('mongoose')
 var passport = require('passport')
 
 var User = require('../app/models/user')
+var verifyToken = require('../app/middleware/verifyToken');
 var router = express.Router();
+
+var env = require('../env')
+
 
 
 router.get('/' , function(req , res){
@@ -43,13 +47,9 @@ router.route('/users')
     User.createUser(user , callback);
   });
 
-router.get('/isloggedin' , function(req,res,next){
-  if(req.user){
-    res.send({"message": req.user+" authenticated"})
-    next();
-  }
-  else
-    res.send({"message": "not authenticated"})
+router.post('/isloggedin' , verifyToken , function(){
+  // console.log("Authenticated");
+  // console.log({"decoded":req.decoded})
 })
 
 //login route

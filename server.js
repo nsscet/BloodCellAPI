@@ -11,12 +11,14 @@ var passport = require('passport');
 var jwt = require('jsonwebtoken')
 
 var db = require('./config/db')
+var env = require('./env')
 
 mongoose.Promise = global.Promise;
 
 
 //connecting to db
-mongoose.connect(db.url , {useMongoClient:true})
+console.log(env.DB_URL);
+mongoose.connect(env.DB_URL , {useMongoClient:true})
 
 
 //configuration
@@ -39,6 +41,6 @@ app.use(passport.session());
 app.use('/api' , router)
 
 //server
-var port = process.env.port || 8080;
+var port = env.PORT || 8080;
 app.listen(port)
 console.log('API on port ' , port);
