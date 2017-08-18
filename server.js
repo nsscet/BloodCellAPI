@@ -17,7 +17,6 @@ mongoose.Promise = global.Promise;
 
 
 //connecting to db
-console.log(env.DB_URL);
 mongoose.connect(env.DB_URL , {useMongoClient:true})
 
 

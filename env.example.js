@@ -1,8 +1,8 @@
 
 module.exports = {
-  var DB_URL = "",
+      DB_URL : "",
 
-      SECRET = '',
+      SECRET : '',
 
-      PORT = ''
+      PORT : ''
 }
