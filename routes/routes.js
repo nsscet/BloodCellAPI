@@ -28,6 +28,7 @@ router.route('/users')
   var user = new User();
   user.username = req.body.username;
   user.password = req.body.password;
+  // console.log(req.body);
   var callback = function(err , message){
     if(err)
     throw err;
@@ -39,8 +40,6 @@ router.route('/users')
     res.send({
       message:"User created" , user:user
     })
-
-
   }
   User.createUser(user , callback);
 });
@@ -50,6 +49,22 @@ router.route('/users')
 router.post('/login' , function(req, res, next){
   User.verifyCredentials(req, res, next);
 });
+
+// router.post('/login',
+//   passport.authenticate('local'),
+//   function(req, res) {
+//     console.log("authenticated");
+//     // If this function gets called, authentication was successful.
+//     // `req.user` contains the authenticated user.
+//     if(req.user){
+//       // console.log(req.user);
+//       // User.generateToken(req , res);
+//       res.send({"message":"Authenticated successfully"})
+//     }
+//     else
+//       res.send({"message": "Invaid username/password"})
+//   });
+
 
 router.get('/loginSuccess' , function(req, res, next){
   res.send({message:"Authentication Success"})
