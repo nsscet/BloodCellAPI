@@ -4,6 +4,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 
+var env = require('../../env')
+
 var Schema = mongoose.Schema
 
 
@@ -73,7 +75,7 @@ module.exports.verifyCredentials = function(req, res, next){
         username:user.username,
         id:user._id
       }
-      let token = jwt.sign(user , "needsreplacement" , {
+      let token = jwt.sign(tokenData , env.SECRET , {
         expiresIn:1440
       })
       res.send({"message": user.username + " Authenticated" , token:token})
