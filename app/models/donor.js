@@ -9,3 +9,7 @@ var DonorSchema = new Schema({
 })
 
 var Donor = module.exports = mongoose.model('Donor' , DonorSchema);
+
+module.exports.createDonor = function(newDonor , callback){
+  newDonor.save(callback)
+}

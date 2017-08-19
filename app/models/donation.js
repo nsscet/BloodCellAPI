@@ -13,6 +13,5 @@ var Donation = module.exports = mongoose.model('Donation' , Donation);
 
 
 module.exports.createDonation = function(newDonation , callback){
-  console.log(newDonation);
   newDonation.save(callback);
   }

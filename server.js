@@ -14,7 +14,7 @@ var db = require('./config/db')
 var env = require('./env')
 // var verifyToken = require('./app/middleware/verifyToken')
 
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 
 //connecting to db
