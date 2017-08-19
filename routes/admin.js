@@ -28,11 +28,6 @@ router.route('/donation')
       if(message)
       res.send(message)
 
-      if(newDonation){
-        res.send({
-          message:"Donation created" , donation:newDonation
-        })
-      }
     }
 
     Donation.createDonation(newDonation , callback);
@@ -53,14 +48,19 @@ router.route('/donor')
       if(message)
       res.send(message)
 
-      if(newDonor){
-        res.send({
-          message:"Donor created" , donor:newDonor
-        })
-      }
     }
-
     Donor.createDonor(newDonor , callback);
+  })
 
+  router.post('/findUserByMobileNumber' , function(req, res){
+    var mobileNumber = req.body.mobileNumber;
+    var callback = function(err , message){
+      if(err)
+      throw err;
+
+      if(message)
+      res.send(message)
+    }
+    Donor.findUserByMobileNumber(mobileNumber , callback);
   })
 module.exports = router;
