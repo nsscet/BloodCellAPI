@@ -6,7 +6,6 @@ var User = require('../app/models/user')
 var verifyToken = require('../app/middleware/verifyToken');
 var router = express.Router();
 
-var env = require('../env')
 
 
 

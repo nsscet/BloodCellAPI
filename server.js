@@ -12,8 +12,9 @@ var jwt = require('jsonwebtoken')
 
 var db = require('./config/db')
 var env = require('./env')
+// var verifyToken = require('./app/middleware/verifyToken')
 
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 
 
 //connecting to db
@@ -27,8 +28,9 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(logger('dev'));
 
 //router
-var router = require('./routes/routes.js')
-router.use(function(req,res,next){
+var routes = require('./routes/routes.js')
+var adminRoutes = require('./routes/admin.js')
+routes.use(function(req,res,next){
   console.log("Something is happening");
   next();
 })
@@ -37,7 +39,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/api' , router)
+// console.log(adminRoutes);
+app.use('/api' , routes)
+app.use('/api/admin' , adminRoutes)
 
 //server
 var port = env.PORT || 8080;

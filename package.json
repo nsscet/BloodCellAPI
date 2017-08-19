@@ -1,7 +1,8 @@
 {
   "name": "bloodcellcetapi",
   "version": "1.0.0",
-  "description": "A simple API for the NSS Blood Cell CET",
+  "private": true,
+  "description": "An API for the NSS Blood Cell CET",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

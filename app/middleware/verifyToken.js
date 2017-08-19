@@ -10,7 +10,7 @@ module.exports = function(req,res,next) {
                 return res.json({"error": true});
             }
             req.decoded = decoded;
-            res.send({message: "User authenticated"})
+            console.log("Token successfully verified");
             next(); //no error, proceed
         });
     } else {
