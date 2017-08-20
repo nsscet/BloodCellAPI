@@ -2,10 +2,10 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
 var DonorSchema = new Schema({
-  name: String,
-  mobileNumber: Number,
-  place: String,
-  email: String
+  name: {type:String , required:true},
+  mobileNumber: {type:Number , unique:true},
+  place: {type:String , required:true},
+  email: {type:String , unique:true}
 })
 
 var Donor = module.exports = mongoose.model('Donor' , DonorSchema);
@@ -58,10 +58,35 @@ module.exports.findUserByUsername = function(username , callback){
                     var message = {
                         message:"Donor not found",
                         donorId:null
-                        
+
                     }
                     callback(null , message)
                 }
-            }  
+            }
             )
+}
+
+module.exports.findUserById = function(userId , callback){
+  Donor.findOne(
+    {_id: userId } ,
+    function(err , donor){
+      if(err){
+        callback(err , null)
+      }
+      else if(donor){
+        var message = {
+            message:"Donor found",
+            donor:donor
+        }
+        callback(null , message)
+      }
+      else{
+        var message = {
+            message:"Donor not found",
+            donor:null
+        }
+        callback(null , message)
+      }
+    }
+  )
 }

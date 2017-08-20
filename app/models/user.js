@@ -11,8 +11,8 @@ var Schema = mongoose.Schema
 
 var UserSchema = new mongoose.Schema(
   {
-    username:String,
-    password:String
+    username:{type:String , required:true , unique:true},
+    password:{type:String , required:true}
   }
 )
 
@@ -20,113 +20,115 @@ var UserSchema = new mongoose.Schema(
 //passport local strategy for authentication
 passport.use(new LocalStrategy(
   function(username, password, done) {
-  process.nextTick(function() {
-    User.findOne({
-      'username': username,
-    },
-    function(err, user) {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false);
-      }
-      bcrypt.compare(password, user.password, function(err, res) {
-        console.log(res);
-        if(err) throw err;
-
-        if(res == false){
-          return done(null , false);
+    process.nextTick(function() {
+      User.findOne({
+        'username': username,
+      },
+      function(err, user) {
+        if (err) {
+          return done(err);
         }
-
-        if(res == true){
-          console.log(user);
-          return done(null , user)
+        if (!user) {
+          return done(null, false);
         }
+        bcrypt.compare(password, user.password, function(err, res) {
+          // console.log(res);
+          if(err) throw err;
+
+          if(res == false){
+            return done(null , false);
+          }
+
+          if(res == true){
+            console.log(user);
+            return done(null , user)
+          }
+        });
       });
     });
+  }));
+
+  //sessions
+  passport.serializeUser(function(user, done) {
+    done(null, user);
   });
-}));
 
-//sessions
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
+  passport.deserializeUser(function(user, done) {
+    done(null, user);
+  });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
+  var User = module.exports = mongoose.model('User' , UserSchema);
 
-var User = module.exports = mongoose.model('User' , UserSchema);
-
-module.exports.verifyCredentials = function(req, res, next){
-  passport.authenticate('local' , function(err, user , info){
-    console.log("Authenticated");
-    if(err)
-      return next(err);
-    if(!user)
-      return res.send({message:"Error authentcating. Username doesnot exist."})
-    req.logIn(user , function(err){
-      if(err){
+  module.exports.verifyCredentials = function(req, res, next){
+    passport.authenticate('local' , function(err, user , info){
+      // console.log("Authenticated");
+      // console.log(user);
+      // console.log(user);
+      if(err)
         return next(err);
-      }
-      //generating JWT
-      var tokenData = {
-        username:user.username,
-        id:user._id
-      }
-      let token = jwt.sign(tokenData , env.SECRET , {
-        expiresIn:1440
-      })
-      res.send({"message": user.username + " Authenticated" , token:token})
-    })
-  })(req,res,next)
-}
 
-module.exports.createUser = function(newUser , callback){
-  User.findOne(
-    { username: newUser.username },
-    function(err,user){
-      if(user){
-        console.log("User already exists");
-        var message = {message: "User already exists"}
-        callback(null , message);
-      }
-      else{
-        bcrypt.genSalt(10, function(err, salt) {
-          bcrypt.hash(newUser.password, salt, function(err, hash) {
-            if(err)
-                throw err
-            newUser.password = hash;
-            newUser.save(callback);
-          })
+      if(!user)
+        return res.send({message:"Error authentcating. Username doesnot exist."})
+
+      req.logIn(user , function(err){
+        if(err){
+          return next(err);
+        }
+        //generating JWT
+        var tokenData = {
+          username:user.username,
+          id:user._id
+        }
+        let token = jwt.sign(tokenData , env.SECRET , {
+          expiresIn:1440
         })
-      }
-    })
+        res.send({"message": user.username + " Authenticated" , token:token})
+      })
+    })(req,res,next)
   }
 
-module.exports.findUserByUsername = function(username , callback){
-      User.findOne(
-                           {username: username},
-                         function(err , donor){
-                                  if(err)
-                                              callback(err , null)
-                                        else if(donor){
-                                                 var message = {
-                                                             message:"Donor exists",
-                                                           donorId: donor._id
-                                                              }
-                                                  callback(null , message)
-                                                     }
-                                   else{
-                                            var message = {
-                                                        message:"Donor not found",
-                                                      donorId:null
-                                      
-                                                         }
-                                             callback(null , message)
-                                                 }
-                                   }
-      )
-}
+  module.exports.createUser = function(newUser , callback){
+    User.findOne(
+      { username: newUser.username },
+      function(err,user){
+        if(user){
+          // console.log("User already exists");
+          var message = {message: "User already exists"}
+          callback(null , message);
+        }
+        else{
+          bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(newUser.password, salt, function(err, hash) {
+              if(err)
+              throw err
+              newUser.password = hash;
+              newUser.save(callback);
+            })
+          })
+        }
+      })
+    }
 
+    module.exports.findUserByUsername = function(username , callback){
+      User.findOne(
+        {username: username},
+        function(err , user){
+          if(err)
+          callback(err , null)
+          else if(user){
+            var message = {
+              message:"User exists",
+              userId: user._id
+            }
+            callback(null , message)
+          }
+          else{
+            var message = {
+              message:"User not found",
+              userId:null
+            }
+            callback(null , message)
+          }
+        }
+      )
+    }

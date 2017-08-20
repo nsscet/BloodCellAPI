@@ -27,6 +27,9 @@ mongoose.connect(env.DB_URL , {useMongoClient:true})
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(logger('dev'));
 
 //router

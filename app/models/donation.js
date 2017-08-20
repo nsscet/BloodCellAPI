@@ -2,10 +2,9 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
 var Donation = new Schema({
-  id: String,
-  donorId:String,
-  hospitalId: String,
-  dateOfDonation: Date,
+  donorId:{type:String , required:true},
+  hospitalId: {type:String , required:true},
+  dateOfDonation: {type: String , default: Date.now() , required:true},
   coupouns: {type: [] , default: ['some' , 'sample' , 'coupons']}
 })
 

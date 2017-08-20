@@ -22,6 +22,7 @@ router.route('/donation')
     newDonation.donorId = req.body.donorId
     newDonation.hospitalId = req.body.hospitalId
     newDonation.dateOfDonation = req.body.dateOfDonation
+    // console.log(newDonation);
     var callback = function(err , message){
       if(err)
       throw err;
@@ -30,7 +31,6 @@ router.route('/donation')
       res.send(message)
 
     }
-
     Donation.createDonation(newDonation , callback);
   })
 
@@ -52,6 +52,19 @@ router.route('/donor')
     }
     Donor.createDonor(newDonor , callback);
   })
+  router.post('/findUserById' , function(req , res){
+    var userId = req.body.donorId
+    console.log(userId);
+    var callback = function(err , message){
+      if(err)
+      throw err;
+
+      if(message)
+      res.send(message)
+
+    }
+    Donor.findUserById(userId , callback);
+  })
 
   router.post('/findUserByMobileNumber' , function(req, res){
     var mobileNumber = req.body.mobileNumber;
@@ -65,15 +78,4 @@ router.route('/donor')
     Donor.findUserByMobileNumber(mobileNumber , callback);
   })
 
-
-router.post('/isValidUsername' , function(req , res){
-    var username = req.body.username;
-    var callback = function(err, message){
-        if(err)
-            throw err;
-        if(message)
-            res.send(message)
-    }
-    User.findUserByUsername(username , callback)
-})
 module.exports = router;

@@ -53,8 +53,21 @@ router.post('/isloggedin' , verifyToken , function(){
 
 //login route
 router.post('/login' , function(req, res, next){
+  // console.log(req.body);
   User.verifyCredentials(req, res, next);
 });
 
+//to check if username is valid
+router.post('/isValidUsername' , function(req , res){
+    var username = req.body.username;
+    // console.log(req.body);
+    var callback = function(err, message){
+        if(err)
+            throw err;
+        if(message)
+            res.send(message)
+    }
+    User.findUserByUsername(username , callback)
+})
 
 module.exports = router;
