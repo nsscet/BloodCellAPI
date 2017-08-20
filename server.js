@@ -9,10 +9,12 @@ var logger = require('morgan')
 var mongoose = require('mongoose')
 var passport = require('passport');
 var jwt = require('jsonwebtoken')
+var cors = require('cors')
 
 var db = require('./config/db')
 var env = require('./env')
 // var verifyToken = require('./app/middleware/verifyToken')
+var setHeaders = require('./app/middleware/setHeaders')
 
 mongoose.Promise = global.Promise;
 
@@ -38,6 +40,8 @@ routes.use(function(req,res,next){
 app.use(passport.initialize());
 app.use(passport.session());
 
+//set Headers
+app.use(cors());
 
 // console.log(adminRoutes);
 app.use('/api' , routes)

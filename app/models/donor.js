@@ -40,3 +40,28 @@ module.exports.findUserByMobileNumber = function(mobileNumber , callback){
     }
   })
 }
+
+module.exports.findUserByUsername = function(username , callback){
+    Donor.findOne(
+            {username: username},
+            function(err , donor){
+                if(err)
+                    callback(err , null)
+                else if(donor){
+                    var message = {
+                        message:"Donor exists",
+                        donorId: donor._id
+                    }
+                    callback(null , message)
+                }
+                else{
+                    var message = {
+                        message:"Donor not found",
+                        donorId:null
+                        
+                    }
+                    callback(null , message)
+                }
+            }  
+            )
+}

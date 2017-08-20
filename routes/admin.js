@@ -4,6 +4,7 @@ var router = express.Router();
 var verifyToken = require('../app/middleware/verifyToken')
 var Donation = require('../app/models/donation')
 var Donor = require('../app/models/donor')
+var User = require('../app/models/user')
 
 //middleware to protect routes
 router.use(function(req,res,next){
@@ -63,4 +64,16 @@ router.route('/donor')
     }
     Donor.findUserByMobileNumber(mobileNumber , callback);
   })
+
+
+router.post('/isValidUsername' , function(req , res){
+    var username = req.body.username;
+    var callback = function(err, message){
+        if(err)
+            throw err;
+        if(message)
+            res.send(message)
+    }
+    User.findUserByUsername(username , callback)
+})
 module.exports = router;
