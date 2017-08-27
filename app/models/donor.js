@@ -2,16 +2,43 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
 var DonorSchema = new Schema({
-  name: {type:String , required:true},
-  mobileNumber: {type:Number , unique:true},
-  place: {type:String , required:true},
-  email: {type:String , unique:true}
+  donorId: {
+    type: String ,
+    unique:true ,
+    required: true
+  },
+  name: {
+    type:String,
+    required:true
+  },
+  mobileNumber: {
+    type:Number,
+    unique:true
+  },
+  place: {
+    type:String,
+    required:true
+  },
+  email: {
+    type:String,
+    unique:true
+  },
+  bloodGroup: {
+    type:String,
+    required:true
+  }
 })
 
 var Donor = module.exports = mongoose.model('Donor' , DonorSchema);
 
 module.exports.createDonor = function(newDonor , callback){
-  newDonor.save(callback)
+  newDonor.save((err) => {
+    if(err){
+      callback(err , null)
+    }
+    else
+      callback(null , newDonor)
+  })
 }
 
 module.exports.findUserByMobileNumber = function(mobileNumber , callback){

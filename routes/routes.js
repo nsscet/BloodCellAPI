@@ -70,4 +70,8 @@ router.post('/isValidUsername' , function(req , res){
     User.findUserByUsername(username , callback)
 })
 
+router.post('/logout' , function(req, res){
+  
+})
+
 module.exports = router;

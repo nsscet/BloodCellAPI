@@ -4,12 +4,14 @@
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
 var mongo = require('mongodb')
 var logger = require('morgan')
 var mongoose = require('mongoose')
 var passport = require('passport');
 var jwt = require('jsonwebtoken')
 var cors = require('cors')
+var helmet = require('helmet')
 
 var db = require('./config/db')
 var env = require('./env')
@@ -24,6 +26,7 @@ mongoose.connect(env.DB_URL , {useMongoClient:true})
 
 
 //configuration
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
@@ -31,6 +34,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(logger('dev'));
+app.use(helmet())
 
 //router
 var routes = require('./routes/routes.js')

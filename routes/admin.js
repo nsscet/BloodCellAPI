@@ -42,12 +42,29 @@ router.route('/donor')
     newDonor.mobileNumber = req.body.mobileNumber
     newDonor.place = req.body.place
     newDonor.email = req.body.email
-    var callback = function(err , message){
-      if(err)
-      throw err;
+    newDonor.bloodGroup = req.body.bloodGroup
+    newDonor.donorId = req.body.donorId
+    var callback = function(err , newDonor){
+      if(err){
+        let message = {
+          "message": "Some error occured."
+        }
+        throw err;
+        res.send(message)
+      }
 
-      if(message)
-      res.send(message)
+      else{
+        let message = {
+          "message": "New donor was successfully created",
+          "Donor": newDonor
+        }
+        res.send(message)
+
+      }
+
+      // res.send({
+      //   message:"Donor created"
+      // })
 
     }
     Donor.createDonor(newDonor , callback);

@@ -29,18 +29,18 @@ passport.use(new LocalStrategy(
           return done(err);
         }
         if (!user) {
-          return done(null, false);
+          return done(null, false , { message: "Username or password is incorrect" });
         }
         bcrypt.compare(password, user.password, function(err, res) {
           // console.log(res);
           if(err) throw err;
 
           if(res == false){
-            return done(null , false);
+            return done(null , false , { message: "Username or password is incorrect" });
           }
 
           if(res == true){
-            console.log(user);
+            // console.log(user);
             return done(null , user)
           }
         });
@@ -60,7 +60,7 @@ passport.use(new LocalStrategy(
   var User = module.exports = mongoose.model('User' , UserSchema);
 
   module.exports.verifyCredentials = function(req, res, next){
-    passport.authenticate('local' , function(err, user , info){
+    passport.authenticate('local' ,{ session: false }, function(err, user , info){
       // console.log("Authenticated");
       // console.log(user);
       // console.log(user);
@@ -68,20 +68,32 @@ passport.use(new LocalStrategy(
         return next(err);
 
       if(!user)
-        return res.send({message:"Error authentcating. Username doesnot exist."})
+        return res.send({message:"Error authentcating. Username or password is incorrect"})
 
       req.logIn(user , function(err){
         if(err){
           return next(err);
         }
+
         //generating JWT
         var tokenData = {
           username:user.username,
           id:user._id
         }
+
         let token = jwt.sign(tokenData , env.SECRET , {
           expiresIn:1440
         })
+        // let header = 'token='+token
+        // res.setHeader('Set-Cookie' , ['SECRET=newsec'])
+        
+        res.cookie('token',
+          token
+          // {secure: true,
+          // httpOnly: true}
+        )
+
+        // console.log(res);
         res.send({"message": user.username + " Authenticated" , token:token})
       })
     })(req,res,next)
