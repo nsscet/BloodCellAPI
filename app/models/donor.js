@@ -41,34 +41,33 @@ module.exports.createDonor = function(newDonor , callback){
   })
 }
 
-module.exports.findUserByMobileNumber = function(mobileNumber , callback){
+module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
   Donor.findOne(
 
     {mobileNumber:mobileNumber} ,
 
     function(err , donor){
-    console.log(donor);
     if(err){
       callback(err, null);
     }
     else if (donor) {
       var message = {
-        message: "Donor already exists",
-        donorId: donor._id
+        message: "Existing Donor",
+        donor: donor
       }
       callback(null , message)
     }
     else{
       var message = {
         message: "New Donor",
-        donorId: null
+        donor: null
       }
       callback(null , message)
     }
   })
 }
 
-module.exports.findUserByUsername = function(username , callback){
+module.exports.findDonorByUsername = function(username , callback){
     Donor.findOne(
             {username: username},
             function(err , donor){
@@ -77,7 +76,7 @@ module.exports.findUserByUsername = function(username , callback){
                 else if(donor){
                     var message = {
                         message:"Donor exists",
-                        donorId: donor._id
+                        donor: donor
                     }
                     callback(null , message)
                 }
@@ -93,9 +92,9 @@ module.exports.findUserByUsername = function(username , callback){
             )
 }
 
-module.exports.findUserById = function(userId , callback){
+module.exports.findDonorById = function(Donor , callback){
   Donor.findOne(
-    {_id: userId } ,
+    {_id: Donor } ,
     function(err , donor){
       if(err){
         callback(err , null)

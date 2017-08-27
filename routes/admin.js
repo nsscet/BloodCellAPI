@@ -79,9 +79,8 @@ router.route('/donor')
     }
     Donor.createDonor(newDonor , callback);
   })
-  router.post('/findUserById' , function(req , res){
-    var userId = req.body.donorId
-    console.log(userId);
+  router.post('/findDonorById' , function(req , res){
+    var DonorId = req.body.donorId
     var callback = function(err , message){
       if(err)
       throw err;
@@ -90,10 +89,10 @@ router.route('/donor')
       res.send(message)
 
     }
-    Donor.findUserById(userId , callback);
+    Donor.findDonorById(DonorId , callback);
   })
 
-  router.post('/findUserByMobileNumber' , function(req, res){
+  router.post('/findDonorByMobileNumber' , function(req, res){
     var mobileNumber = req.body.mobileNumber;
     var callback = function(err , message){
       if(err)
@@ -102,7 +101,7 @@ router.route('/donor')
       if(message)
       res.send(message)
     }
-    Donor.findUserByMobileNumber(mobileNumber , callback);
+    Donor.findDonorByMobileNumber(mobileNumber , callback);
   })
 
 module.exports = router;
