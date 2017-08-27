@@ -12,23 +12,33 @@ router.use(function(req,res,next){
 });
 
 router.get('/' , function(req, res, next){
-  // console.log("Hello");
   res.send({"message": "Hey there, Admin"});
 })
 
 router.route('/donation')
   .post(function(req, res){
     var newDonation = new Donation;
+
     newDonation.donorId = req.body.donorId
     newDonation.hospitalId = req.body.hospitalId
     newDonation.dateOfDonation = req.body.dateOfDonation
-    // console.log(newDonation);
-    var callback = function(err , message){
-      if(err)
-      throw err;
+    newDonation.typeOfDonation = req.body.typeOfDonation
 
-      if(message)
-      res.send(message)
+    var callback = function(err , message){
+      if(err){
+        let message = {
+          "message": "Some error occured."
+        }
+        throw err;
+        res.send(message)
+      }
+      else{
+        let message = {
+          "message": "New donation was successfully registered",
+          "Donor": newDonation
+        }
+        res.send(message)
+      }
 
     }
     Donation.createDonation(newDonation , callback);
