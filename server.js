@@ -48,11 +48,12 @@ app.use(session({
 //router
 var routes = require('./routes/routes.js')
 var adminRoutes = require('./routes/admin.js')
-routes.use(function(req,res,next){
-  console.log(req.session);
-  console.log("Something is happening");
-  next();
-})
+//  This commented block may be used for debugging
+// routes.use(function(req,res,next){
+//   console.log(req.session);
+//   console.log("Something is happening");
+//   next();
+// })
 
 app.use(passport.initialize());
 

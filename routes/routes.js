@@ -60,7 +60,7 @@ router.post('/isValidUsername' , function(req , res){
   User.findUserByUsername(username , callback)
 })
 
-router.post('/logout' , function(req, res){
+router.get('/logout' , function(req, res){
   req.session.accessToken = null;
   res.send({
     message: "The user was successfully logged out"

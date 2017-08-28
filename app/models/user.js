@@ -27,13 +27,13 @@ passport.use(new LocalStrategy(
           return done(err);
         }
         if (!user) {
-          return done(null, false , { message: "Username or password is incorrect" });
+          return done(null, false , { message: "Username or password is incorrect", success:false });
         }
         bcrypt.compare(password, user.password, function(err, res) {
           if(err) throw err;
 
           if(res == false){
-            return done(null , false , { message: "Username or password is incorrect" });
+            return done(null , false , { message: "Username or password is incorrect", success:false});
           }
 
           if(res == true){
@@ -70,7 +70,7 @@ passport.use(new LocalStrategy(
         })
 
         req.session.accessToken = token;
-        res.send({"message": user.username + " Authenticated" , token:token})
+        res.send({"message": user.username + " Authenticated" , success: true})
       })
     })(req,res,next)
   }
