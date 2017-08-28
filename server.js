@@ -65,7 +65,7 @@ app.use(passport.initialize());
 
 //set Headers
 app.use(cors({
-  // origin: '127.0.0.1:8080',
+  origin: 'http://localhost:8080',
   credentials: true
 }));
 

@@ -87,7 +87,7 @@ passport.use(new LocalStrategy(
         })
 
         req.session.accessToken = token;
-        console.log(req.session);
+        // console.log(req.session);
         res.send({"message": user.username + " Authenticated" , token:token})
       })
     })(req,res,next)

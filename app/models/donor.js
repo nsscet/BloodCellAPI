@@ -43,6 +43,7 @@ module.exports.createDonor = function(newDonor , callback){
 }
 
 module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
+  console.log("inside findDonorByMobileNumber");
   Donor.findOne(
 
     {mobileNumber:mobileNumber} ,

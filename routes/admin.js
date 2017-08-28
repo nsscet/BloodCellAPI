@@ -8,7 +8,7 @@ var User = require('../app/models/user')
 
 //middleware to protect routes
 router.use(function(req,res,next){
-  console.log("token is " , req.session);
+  // console.log("token is " , req.session);
   verifyToken(req , res , next)
 });
 

@@ -74,7 +74,10 @@ router.post('/isValidUsername' , function(req , res){
 })
 
 router.post('/logout' , function(req, res){
-
+  req.session.accessToken = null;
+  res.send({
+    message: "The user was successfully logged out"
+  })
 })
 
 module.exports = router;
