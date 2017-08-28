@@ -8,6 +8,7 @@ var User = require('../app/models/user')
 
 //middleware to protect routes
 router.use(function(req,res,next){
+  console.log("token is " , req.session);
   verifyToken(req , res , next)
 });
 
@@ -54,6 +55,7 @@ router.route('/donor')
     newDonor.email = req.body.email
     newDonor.bloodGroup = req.body.bloodGroup
     newDonor.donorId = req.body.donorId
+
     var callback = function(err , newDonor){
       if(err){
         let message = {
@@ -93,6 +95,8 @@ router.route('/donor')
   })
 
   router.post('/findDonorByMobileNumber' , function(req, res){
+    // console.log("Cookie exists " , req.cookie);
+    // console.log(req);
     var mobileNumber = req.body.mobileNumber;
     var callback = function(err , message){
       if(err)

@@ -4,6 +4,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 
+
 var env = require('../../env')
 
 var Schema = mongoose.Schema
@@ -49,28 +50,28 @@ passport.use(new LocalStrategy(
   }));
 
   //sessions
-  passport.serializeUser(function(user, done) {
-    done(null, user);
-  });
-
-  passport.deserializeUser(function(user, done) {
-    done(null, user);
-  });
+  // passport.serializeUser(function(user, done) {
+  //   done(null, user);
+  // });
+  //
+  // passport.deserializeUser(function(user, done) {
+  //   done(null, user);
+  // });
 
   var User = module.exports = mongoose.model('User' , UserSchema);
 
   module.exports.verifyCredentials = function(req, res, next){
-    passport.authenticate('local' ,{ session: false }, function(err, user , info){
+    passport.authenticate('local' ,function(err, user , info){
       // console.log("Authenticated");
       // console.log(user);
       // console.log(user);
       if(err)
-        return next(err);
+      return next(err);
 
       if(!user)
-        return res.send({message:"Error authentcating. Username or password is incorrect"})
+      return res.send({message:"Error authentcating. Username or password is incorrect"})
 
-      req.logIn(user , function(err){
+      req.logIn(user, { session: false }, function(err){
         if(err){
           return next(err);
         }
@@ -84,16 +85,9 @@ passport.use(new LocalStrategy(
         let token = jwt.sign(tokenData , env.SECRET , {
           expiresIn:1440
         })
-        // let header = 'token='+token
-        // res.setHeader('Set-Cookie' , ['SECRET=newsec'])
-        
-        res.cookie('token',
-          token
-          // {secure: true,
-          // httpOnly: true}
-        )
 
-        // console.log(res);
+        req.session.accessToken = token;
+        console.log(req.session);
         res.send({"message": user.username + " Authenticated" , token:token})
       })
     })(req,res,next)

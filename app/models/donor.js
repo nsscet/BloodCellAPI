@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var DonorSchema = new Schema({
   donorId: {
-    type: String ,
-    unique:true ,
+    type: String,
+    unique:true,
     required: true
   },
   name: {
@@ -13,7 +13,8 @@ var DonorSchema = new Schema({
   },
   mobileNumber: {
     type:Number,
-    unique:true
+    unique:true,
+    required:true
   },
   place: {
     type:String,

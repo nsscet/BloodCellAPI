@@ -10,6 +10,7 @@ var router = express.Router();
 
 
 router.get('/' , function(req , res){
+  console.log(req.session);
   res.send({ message : "Welcome to Node.js API" });
 })
 
@@ -60,7 +61,9 @@ router.post('/login' , function(req, res, next){
 //to check if username is valid
 router.post('/isValidUsername' , function(req , res){
     var username = req.body.username;
-    // console.log(req.body);
+    // console.log(req.session);
+    // req.session.token = '';
+
     var callback = function(err, message){
         if(err)
             throw err;
@@ -71,7 +74,7 @@ router.post('/isValidUsername' , function(req , res){
 })
 
 router.post('/logout' , function(req, res){
-  
+
 })
 
 module.exports = router;

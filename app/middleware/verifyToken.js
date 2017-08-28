@@ -2,8 +2,9 @@ var jwt = require('jsonwebtoken');
 var env = require('../../env')
 
 module.exports = function(req,res,next) {
-  var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.params.token;
-  console.log(token);
+  console.log(req.session);
+  var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.params.token || req.session.accessToken;
+  // console.log(token);
     if (token) {
     // verifies secret and checks exp
         jwt.verify(token, env.SECRET , function(err, decoded) {
