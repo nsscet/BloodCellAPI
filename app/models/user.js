@@ -1,14 +1,12 @@
 var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 
-
 var env = require('../../env')
-
-var Schema = mongoose.Schema
-
 
 var UserSchema = new mongoose.Schema(
   {
@@ -16,7 +14,6 @@ var UserSchema = new mongoose.Schema(
     password:{type:String , required:true}
   }
 )
-
 
 //passport local strategy for authentication
 passport.use(new LocalStrategy(
@@ -33,7 +30,6 @@ passport.use(new LocalStrategy(
           return done(null, false , { message: "Username or password is incorrect" });
         }
         bcrypt.compare(password, user.password, function(err, res) {
-          // console.log(res);
           if(err) throw err;
 
           if(res == false){
@@ -41,7 +37,6 @@ passport.use(new LocalStrategy(
           }
 
           if(res == true){
-            // console.log(user);
             return done(null , user)
           }
         });
@@ -49,22 +44,10 @@ passport.use(new LocalStrategy(
     });
   }));
 
-  //sessions
-  // passport.serializeUser(function(user, done) {
-  //   done(null, user);
-  // });
-  //
-  // passport.deserializeUser(function(user, done) {
-  //   done(null, user);
-  // });
-
   var User = module.exports = mongoose.model('User' , UserSchema);
 
   module.exports.verifyCredentials = function(req, res, next){
     passport.authenticate('local' ,function(err, user , info){
-      // console.log("Authenticated");
-      // console.log(user);
-      // console.log(user);
       if(err)
       return next(err);
 
@@ -87,7 +70,6 @@ passport.use(new LocalStrategy(
         })
 
         req.session.accessToken = token;
-        // console.log(req.session);
         res.send({"message": user.username + " Authenticated" , token:token})
       })
     })(req,res,next)
@@ -98,7 +80,6 @@ passport.use(new LocalStrategy(
       { username: newUser.username },
       function(err,user){
         if(user){
-          // console.log("User already exists");
           var message = {message: "User already exists"}
           callback(null , message);
         }

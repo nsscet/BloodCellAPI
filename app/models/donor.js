@@ -30,91 +30,93 @@ var DonorSchema = new Schema({
   }
 })
 
-var Donor = module.exports = mongoose.model('Donor' , DonorSchema);
+var Donor = module.exports = mongoose.model('Donor', DonorSchema);
 
-module.exports.createDonor = function(newDonor , callback){
+module.exports.createDonor = function(newDonor, callback){
   newDonor.save((err) => {
     if(err){
-      callback(err , null)
+      callback(err, null)
     }
     else
-      callback(null , newDonor)
+    callback(null, newDonor)
   })
 }
 
 module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
-  console.log("inside findDonorByMobileNumber");
   Donor.findOne(
+    {
+      mobileNumber:mobileNumber
+    },
 
-    {mobileNumber:mobileNumber} ,
-
-    function(err , donor){
-    if(err){
-      callback(err, null);
-    }
-    else if (donor) {
-      var message = {
-        message: "Existing Donor",
-        donor: donor
-      }
-      callback(null , message)
-    }
-    else{
-      var message = {
-        message: "New Donor",
-        donor: null
-      }
-      callback(null , message)
-    }
-  })
-}
-
-module.exports.findDonorByUsername = function(username , callback){
-    Donor.findOne(
-            {username: username},
-            function(err , donor){
-                if(err)
-                    callback(err , null)
-                else if(donor){
-                    var message = {
-                        message:"Donor exists",
-                        donor: donor
-                    }
-                    callback(null , message)
-                }
-                else{
-                    var message = {
-                        message:"Donor not found",
-                        donorId:null
-
-                    }
-                    callback(null , message)
-                }
-            }
-            )
-}
-
-module.exports.findDonorById = function(Donor , callback){
-  Donor.findOne(
-    {_id: Donor } ,
-    function(err , donor){
+    function(err, donor){
       if(err){
-        callback(err , null)
+        callback(err, null);
       }
-      else if(donor){
+      else if (donor) {
         var message = {
-            message:"Donor found",
-            donor:donor
+          message: "Existing Donor",
+          donor: donor
         }
-        callback(null , message)
+        callback(null, message)
       }
       else{
         var message = {
+          message: "New Donor",
+          donor: null
+        }
+        callback(null, message)
+      }
+    })
+  }
+
+  module.exports.findDonorByUsername = function(username , callback){
+    Donor.findOne(
+      {username: username},
+      function(err, donor){
+        if(err)
+        callback(err , null)
+        else if(donor){
+          var message = {
+            message:"Donor exists",
+            donor: donor
+          }
+          callback(null, message)
+        }
+        else{
+          var message = {
+            message:"Donor not found",
+            donorId:null
+
+          }
+          callback(null, message)
+        }
+      }
+    )
+  }
+
+  module.exports.findDonorById = function(Donor, callback){
+    Donor.findOne(
+      {
+        _id: Donor
+      },
+      function(err , donor){
+        if(err){
+          callback(err , null)
+        }
+        else if(donor){
+          var message = {
+            message:"Donor found",
+            donor:donor
+          }
+          callback(null , message)
+        }
+        else{
+          var message = {
             message:"Donor not found",
             donor:null
+          }
+          callback(null , message)
         }
-        callback(null , message)
       }
-    }
-  )
-}
+    )
+  }

@@ -4,5 +4,7 @@ module.exports = {
 
       SECRET : '',
 
-      PORT : ''
+      PORT : '',
+
+      COOKIE_KEY: ''
 }

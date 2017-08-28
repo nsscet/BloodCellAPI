@@ -2,9 +2,7 @@ var jwt = require('jsonwebtoken');
 var env = require('../../env')
 
 module.exports = function(req,res,next) {
-  console.log(req.session.accessToken);
   var token =  req.session.accessToken || req.body.token || req.query.token || req.params.token;
-  // console.log(token);
     if (token) {
     // verifies secret and checks exp
         jwt.verify(token, env.SECRET , function(err, decoded) {
@@ -16,8 +14,6 @@ module.exports = function(req,res,next) {
             next(); //no error, proceed
         });
     } else {
-//        console.log(token)
-        // forbidden without token
         return res.status(403).send({
             "error": true,
             "message":"Token not found"
