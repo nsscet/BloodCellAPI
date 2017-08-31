@@ -77,6 +77,26 @@ router.route('/donor')
   }
   Donor.createDonor(newDonor , callback);
 })
+.get(function(req, res){
+  var callback = function(err , donors){
+    if(err){
+      let message = {
+        "message": "Some error occured."
+      }
+      throw err;
+      res.send(message)
+    }
+    else{
+      let message = {
+        "message": "Donors were successfully returned",
+        "Donors": donors
+      }
+      res.send(message)
+
+    }
+  }
+  Donor.getDonors(callback);
+})
 
 router.get('/donors/:id' , function(req, res){
   var callback = function(err , message){

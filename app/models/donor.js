@@ -120,3 +120,14 @@ module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
       }
     )
   }
+
+  module.exports.getDonors = function(callback){
+    Donor.find(function(err , donors){
+      if(err || !donors){
+        callback(err , null)
+      }
+      else if(donors){
+        callback(null , donors)
+      }
+    })
+  }
