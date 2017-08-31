@@ -94,10 +94,10 @@ module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
     )
   }
 
-  module.exports.findDonorById = function(Donor, callback){
+  module.exports.findDonorById = function(id, callback){
     Donor.findOne(
       {
-        _id: Donor
+        donorId: id
       },
       function(err , donor){
         if(err){

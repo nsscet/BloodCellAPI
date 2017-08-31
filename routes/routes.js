@@ -11,7 +11,9 @@ router.get('/' , function(req , res){
   res.send({ message : "Welcome to Node.js API" });
 })
 
-// '/users' route
+//REST Routes
+
+// resource 'users'
 router.route('/users')
 .get(function(req,res){
   User.find({} , function(err, users){
@@ -38,10 +40,13 @@ router.route('/users')
         message:"User created" , user:user
       })
     }
-
   }
   User.createUser(user , callback);
 });
+
+
+
+// Other Routes
 
 //login route
 router.post('/login' , function(req, res, next){

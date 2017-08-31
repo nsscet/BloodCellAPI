@@ -11,10 +11,14 @@ router.use(function(req,res,next){
   verifyToken(req , res , next)
 });
 
+//Welcome Route
 router.get('/' , function(req, res, next){
   res.send({"message": "Hey there, Admin"});
 })
 
+//ReSTful routes
+
+//Resource donation
 router.route('/donation')
 .post(function(req, res){
   var newDonation = new Donation;
@@ -43,7 +47,7 @@ router.route('/donation')
   Donation.createDonation(newDonation , callback);
 })
 
-
+//Resource Donor
 router.route('/donor')
 .post(function(req , res){
   var newDonor = new Donor();
@@ -62,7 +66,6 @@ router.route('/donor')
       throw err;
       res.send(message)
     }
-
     else{
       let message = {
         "message": "New donor was successfully created",
@@ -74,6 +77,18 @@ router.route('/donor')
   }
   Donor.createDonor(newDonor , callback);
 })
+
+router.get('/donors/:id' , function(req, res){
+  var callback = function(err , message){
+    if(err)
+    throw err;
+
+    if(message)
+    res.send(message)
+  }
+  Donor.findDonorById(req.params.id , callback);
+})
+
 router.post('/findDonorById' , function(req , res){
   var DonorId = req.body.donorId
   var callback = function(err , message){
