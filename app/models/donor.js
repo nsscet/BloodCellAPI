@@ -16,6 +16,9 @@ var DonorSchema = new Schema({
     unique:true,
     required:true
   },
+  organisation: {
+    type:String
+  },
   place: {
     type:String,
     required:true
@@ -27,6 +30,18 @@ var DonorSchema = new Schema({
   bloodGroup: {
     type:String,
     required:true
+  },
+  status: {
+    type: String,
+    default: "No status yet!!"
+  },
+  lastDonation: {
+    typeOfDonation: {
+      type: String
+    },
+    dateOfDonation: {
+      type: String
+    }
   }
 })
 
@@ -129,5 +144,14 @@ module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
       else if(donors){
         callback(null , donors)
       }
+    })
+  }
+
+  module.exports.updateLastDonation = function(donorId , lastDonation){
+    // var update = { $set: { 'lastDonation.dateOfDonation' : lastDonation.dateOfDonation, 'lastDonation.typeOfDonation' : lastDonation.typeOfDonation } }
+    var update = { lastDonation }
+    Donor.findOneAndUpdate({ donorId }, update, function(err , donor){
+      console.log(donor);
+      // console.log(update);
     })
   }

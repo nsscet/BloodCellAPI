@@ -28,6 +28,11 @@ router.route('/donation')
   newDonation.dateOfDonation = req.body.dateOfDonation
   newDonation.typeOfDonation = req.body.typeOfDonation
 
+  var lastDonation = {
+    typeOfDonation: req.body.typeOfDonation,
+    dateOfDonation: req.body.dateOfDonation
+  }
+
   var callback = function(err , message){
     if(err){
       let message = {
@@ -39,11 +44,12 @@ router.route('/donation')
     else{
       let message = {
         "message": "New donation was successfully registered",
-        "Donor": newDonation
+        "Donoation": newDonation
       }
       res.send(message)
     }
   }
+  Donor.updateLastDonation(newDonation.donorId , lastDonation);
   Donation.createDonation(newDonation , callback);
 })
 
@@ -57,6 +63,7 @@ router.route('/donor')
   newDonor.email = req.body.email
   newDonor.bloodGroup = req.body.bloodGroup
   newDonor.donorId = req.body.donorId
+  newDonor.organisation = req.body.organisation
 
   var callback = function(err , newDonor){
     if(err){
