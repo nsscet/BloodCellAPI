@@ -10,8 +10,19 @@ var env = require('../../env')
 
 var UserSchema = new mongoose.Schema(
   {
-    username:{type:String , required:true , unique:true},
-    password:{type:String , required:true}
+    username:{
+      type:String,
+      required:true,
+      unique:true
+    },
+    password:{
+      type:String,
+      required:true
+    },
+    role:{
+      type:String,
+      required:true
+    }
   }
 )
 
@@ -37,7 +48,7 @@ passport.use(new LocalStrategy(
           }
 
           if(res == true){
-            return done(null , user)
+            return done(null , user, { message: "User created" })
           }
         });
       });

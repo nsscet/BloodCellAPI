@@ -13,6 +13,7 @@ var jwt = require('jsonwebtoken')
 var cors = require('cors')
 var helmet = require('helmet')
 var session = require('cookie-session')
+var acl = require('acl')
 
 var db = require('./config/db')
 var env = require('./env')
@@ -20,7 +21,10 @@ var env = require('./env')
 mongoose.Promise = global.Promise;
 
 //connecting to db
-mongoose.connect(env.DB_URL , {useMongoClient:true})
+var db = mongoose.connect(env.DB_URL , {useMongoClient:true})
+
+//configuration of acl
+acl = new acl(new acl.mongodbBackend(db));
 
 //configuration
 app.use(cookieParser())
@@ -46,14 +50,9 @@ app.use(session({
 }))
 
 //router
-var routes = require('./routes/routes.js')
+var routes = require('./routes')
 var adminRoutes = require('./routes/admin.js')
-//  This commented block may be used for debugging
-// routes.use(function(req,res,next){
-//   console.log(req.session);
-//   console.log("Something is happening");
-//   next();
-// })
+
 
 app.use(passport.initialize());
 

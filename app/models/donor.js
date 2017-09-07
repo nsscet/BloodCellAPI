@@ -136,8 +136,8 @@ module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
     )
   }
 
-  module.exports.getDonors = function(callback){
-    Donor.find(function(err , donors){
+  module.exports.getDonors = function(query, callback){
+    Donor.find(query, function(err , donors){
       if(err || !donors){
         callback(err , null)
       }
@@ -148,10 +148,8 @@ module.exports.findDonorByMobileNumber = function(mobileNumber , callback){
   }
 
   module.exports.updateLastDonation = function(donorId , lastDonation){
-    // var update = { $set: { 'lastDonation.dateOfDonation' : lastDonation.dateOfDonation, 'lastDonation.typeOfDonation' : lastDonation.typeOfDonation } }
     var update = { lastDonation }
     Donor.findOneAndUpdate({ donorId }, update, function(err , donor){
       console.log(donor);
-      // console.log(update);
     })
   }

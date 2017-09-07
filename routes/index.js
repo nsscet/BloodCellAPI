@@ -16,10 +16,14 @@ router.get('/' , function(req , res){
 // resource 'users'
 router.route('/users')
 .get(function(req,res){
-  User.find({} , function(err, users){
+  var query = req.query
+  User.find(query , function(err, users){
     if(err)
     console.log(err);
     else{
+      for(index in users){
+        users[index].password = "password"
+      }
       res.send(users.toString());
     }
   });
@@ -28,6 +32,7 @@ router.route('/users')
   var user = new User();
   user.username = req.body.username;
   user.password = req.body.password;
+  user.role = req.body.role;
   var callback = function(err , message){
     if(err)
     throw err;
@@ -36,9 +41,7 @@ router.route('/users')
     res.send(message)
 
     if(user){
-      res.send({
-        message:"User created" , user:user
-      })
+      res.send({ message, user })
     }
   }
   User.createUser(user , callback);

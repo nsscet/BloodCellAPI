@@ -6,6 +6,7 @@ var Donation = require('../app/models/donation')
 var Donor = require('../app/models/donor')
 var User = require('../app/models/user')
 
+
 //middleware to protect routes
 router.use(function(req,res,next){
   verifyToken(req , res , next)
@@ -85,6 +86,8 @@ router.route('/donor')
   Donor.createDonor(newDonor , callback);
 })
 .get(function(req, res){
+  console.log(req.query);
+  var query = req.query
   var callback = function(err , donors){
     if(err){
       let message = {
@@ -102,8 +105,11 @@ router.route('/donor')
 
     }
   }
-  Donor.getDonors(callback);
+  Donor.getDonors(query , callback);
 })
+
+
+//Remove these routes in next update and use query strings
 
 router.get('/donors/:id' , function(req, res){
   var callback = function(err , message){

@@ -1,0 +1,72 @@
+Resource users
+--------------
+SCHEMA:
+    username:String,
+    password:String,
+    role:String
+
+GET:
+    -returns all users
+    -use query strings to perform searches by username
+POST:
+    -creates user
+    -parameters
+        -username
+        -password
+        -role
+    -response
+        -message
+        -user (if created)
+
+Resource Donation
+-----------------
+SCHEMA:
+    -donorId: String
+    -hospitalId: String
+    -dateOfDonation: String
+    -typeOfDonation: String
+    -coupons : Array
+
+POST:
+    -creates a donation
+    -parameters
+        -donorId
+        -hospitalId
+        -dateOfDonation
+        -typeOfDonation
+    -response
+        -message
+        -donation (if created)
+
+Resource Donor
+--------------
+SCHEMA:
+    -donorId
+    -name
+    -mobileNumber
+    -organisation
+    -place
+    -email
+    -bloodGroup
+    -status
+    -lastDonation
+        -typeOfDonation
+        -dateOfDonation
+
+GET:
+    -returns all donors
+    -use querystrings to search the db by mobileNumber, donorId etc.
+
+POST:
+    -creates a new donor
+    -parameters:
+        -name
+        -email
+        -mobileNumber
+        -place
+        -bloodGroup
+        -organisation
+        -donorId //remove this by generating it by count+1
+    -response
+        -message
+        -donor (if created)
