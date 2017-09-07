@@ -13,7 +13,7 @@ var jwt = require('jsonwebtoken')
 var cors = require('cors')
 var helmet = require('helmet')
 var session = require('cookie-session')
-var acl = require('acl')
+// var acl = require('acl')
 
 var db = require('./config/db')
 var env = require('./env')
@@ -21,10 +21,41 @@ var env = require('./env')
 mongoose.Promise = global.Promise;
 
 //connecting to db
-var db = mongoose.connect(env.DB_URL , {useMongoClient:true})
+var connection = mongoose.connect(env.DB_URL , {useMongoClient:true})
 
-//configuration of acl
-acl = new acl(new acl.mongodbBackend(db));
+// //configuration of acl
+// var acl = new acl(new acl.mongodbBackend(connection));
+//
+// acl.addUserRoles('nss', 'sadmin')
+// acl.allow('sadmin', '*', '*' )
+// acl.userRoles('nss', (err, roles) => {
+//   console.log("hello");
+//   console.log(err);
+//   console.log(roles);
+// })
+// //
+// // acl.allow([
+// //   {
+// //     roles: ['superadmin'],
+// //     allows: [
+// //       {resources: '*', permissions: '*'}
+// //     ]
+// //   },
+// //   {
+// //     roles: ['hospital'],
+// //     allows: [
+// //       { resources: ['donations' , 'donor'], permissions:'*' }
+// //     ]
+// //   },
+// //   {
+// //     roles: ['organisation'],
+// //     allows: [
+// //       { resources: ['donor'] , permissions: '*' }
+// //     ]
+// //   }
+// // ])
+//
+// // console.log(acl);
 
 //configuration
 app.use(cookieParser())
@@ -51,7 +82,10 @@ app.use(session({
 
 //router
 var routes = require('./routes')
-var adminRoutes = require('./routes/admin.js')
+var adminRoutes = require('./routes/index.js')
+var userRoutes = require('./routes/user.js')
+var donorRoutes = require('./routes/donor.js')
+var donationRoutes = require('./routes/donation.js')
 
 
 app.use(passport.initialize());
@@ -63,6 +97,9 @@ app.use(cors({
 }));
 
 app.use('/api' , routes)
+app.use('/api/admin' , userRoutes)
+app.use('/api/admin' , donorRoutes)
+app.use('/api/admin' , donationRoutes)
 app.use('/api/admin' , adminRoutes)
 
 //server
