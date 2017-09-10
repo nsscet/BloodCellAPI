@@ -20,94 +20,94 @@ router.get('/' , function(req, res, next){
 //ReSTful routes
 
 //Resource donation
-router.route('/donation')
-.post(function(req, res){
-  var newDonation = new Donation;
-
-  newDonation.donorId = req.body.donorId
-  newDonation.hospitalId = req.body.hospitalId
-  newDonation.dateOfDonation = req.body.dateOfDonation
-  newDonation.typeOfDonation = req.body.typeOfDonation
-
-  var lastDonation = {
-    typeOfDonation: req.body.typeOfDonation,
-    dateOfDonation: req.body.dateOfDonation
-  }
-
-  var callback = function(err , message){
-    if(err){
-      let message = {
-        "message": "Some error occured."
-      }
-      throw err;
-      res.send(message)
-    }
-    else{
-      let message = {
-        "message": "New donation was successfully registered",
-        "Donoation": newDonation
-      }
-      res.send(message)
-    }
-  }
-  Donor.updateLastDonation(newDonation.donorId , lastDonation);
-  Donation.createDonation(newDonation , callback);
-})
+// router.route('/donation')
+// .post(function(req, res){
+//   var newDonation = new Donation;
+//
+//   newDonation.donorId = req.body.donorId
+//   newDonation.hospitalId = req.body.hospitalId
+//   newDonation.dateOfDonation = req.body.dateOfDonation
+//   newDonation.typeOfDonation = req.body.typeOfDonation
+//
+//   var lastDonation = {
+//     typeOfDonation: req.body.typeOfDonation,
+//     dateOfDonation: req.body.dateOfDonation
+//   }
+//
+//   var callback = function(err , message){
+//     if(err){
+//       let message = {
+//         "message": "Some error occured."
+//       }
+//       throw err;
+//       res.send(message)
+//     }
+//     else{
+//       let message = {
+//         "message": "New donation was successfully registered",
+//         "Donoation": newDonation
+//       }
+//       res.send(message)
+//     }
+//   }
+//   Donor.updateLastDonation(newDonation.donorId , lastDonation);
+//   Donation.createDonation(newDonation , callback);
+// })
 
 //Resource Donor
-router.route('/donor')
-.post(function(req , res){
-  var newDonor = new Donor();
-  newDonor.name = req.body.name
-  newDonor.mobileNumber = req.body.mobileNumber
-  newDonor.place = req.body.place
-  newDonor.email = req.body.email
-  newDonor.bloodGroup = req.body.bloodGroup
-  newDonor.donorId = req.body.donorId
-  newDonor.organisation = req.body.organisation
-
-  var callback = function(err , newDonor){
-    if(err){
-      let message = {
-        "message": "Some error occured."
-      }
-      throw err;
-      res.send(message)
-    }
-    else{
-      let message = {
-        "message": "New donor was successfully created",
-        "Donor": newDonor
-      }
-      res.send(message)
-
-    }
-  }
-  Donor.createDonor(newDonor , callback);
-})
-.get(function(req, res){
-  console.log(req.query);
-  var query = req.query
-  var callback = function(err , donors){
-    if(err){
-      let message = {
-        "message": "Some error occured."
-      }
-      throw err;
-      res.send(message)
-    }
-    else{
-      let message = {
-        "message": "Donors were successfully returned",
-        "Donors": donors
-      }
-      res.send(message)
-
-    }
-  }
-  Donor.getDonors(query , callback);
-})
-
+// router.route('/donor')
+// .post(function(req , res){
+//   var newDonor = new Donor();
+//   newDonor.name = req.body.name
+//   newDonor.mobileNumber = req.body.mobileNumber
+//   newDonor.place = req.body.place
+//   newDonor.email = req.body.email
+//   newDonor.bloodGroup = req.body.bloodGroup
+//   newDonor.donorId = req.body.donorId
+//   newDonor.organisation = req.body.organisation
+//
+//   var callback = function(err , newDonor){
+//     if(err){
+//       let message = {
+//         "message": "Some error occured."
+//       }
+//       throw err;
+//       res.send(message)
+//     }
+//     else{
+//       let message = {
+//         "message": "New donor was successfully created",
+//         "Donor": newDonor
+//       }
+//       res.send(message)
+//
+//     }
+//   }
+//   Donor.createDonor(newDonor , callback);
+// })
+// .get(function(req, res){
+//   console.log(req.query);
+//   var query = req.query
+//   var callback = function(err , donors){
+//     if(err){
+//       let message = {
+//         "message": "Some error occured."
+//       }
+//       throw err;
+//       res.send(message)
+//     }
+//     else{
+//       let message = {
+//         "message": "Donors were successfully returned",
+//         "Donors": donors
+//       }
+//       res.send(message)
+//
+//     }
+//   }
+//   Donor.getDonors(query , callback);
+// })
+//
 
 //Remove these routes in next update and use query strings
 

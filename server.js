@@ -13,7 +13,6 @@ var jwt = require('jsonwebtoken')
 var cors = require('cors')
 var helmet = require('helmet')
 var session = require('cookie-session')
-// var acl = require('acl')
 
 var db = require('./config/db')
 var env = require('./env')
@@ -22,40 +21,6 @@ mongoose.Promise = global.Promise;
 
 //connecting to db
 var connection = mongoose.connect(env.DB_URL , {useMongoClient:true})
-
-// //configuration of acl
-// var acl = new acl(new acl.mongodbBackend(connection));
-//
-// acl.addUserRoles('nss', 'sadmin')
-// acl.allow('sadmin', '*', '*' )
-// acl.userRoles('nss', (err, roles) => {
-//   console.log("hello");
-//   console.log(err);
-//   console.log(roles);
-// })
-// //
-// // acl.allow([
-// //   {
-// //     roles: ['superadmin'],
-// //     allows: [
-// //       {resources: '*', permissions: '*'}
-// //     ]
-// //   },
-// //   {
-// //     roles: ['hospital'],
-// //     allows: [
-// //       { resources: ['donations' , 'donor'], permissions:'*' }
-// //     ]
-// //   },
-// //   {
-// //     roles: ['organisation'],
-// //     allows: [
-// //       { resources: ['donor'] , permissions: '*' }
-// //     ]
-// //   }
-// // ])
-//
-// // console.log(acl);
 
 //configuration
 app.use(cookieParser())

@@ -2,11 +2,13 @@
 var express = require('express')
 var router = express.Router();
 var verifyToken = require('../app/middleware/verifyToken')
+var allowAccess = require('../app/middleware/allowAccess')
 var Donor = require('../app/models/donor')
 
 //middleware to protect routes
 router.use(function(req,res,next){
   verifyToken(req , res , next)
+  allowAccess(req, res, next, 'donor')
 });
 
 router.route('/donor')
@@ -40,7 +42,6 @@ router.route('/donor')
   Donor.createDonor(newDonor , callback);
 })
 .get(function(req, res){
-  console.log(req.query);
   var query = req.query
   var callback = function(err , donors){
     if(err){

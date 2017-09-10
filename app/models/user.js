@@ -73,7 +73,8 @@ passport.use(new LocalStrategy(
         //generating JWT
         var tokenData = {
           username:user.username,
-          id:user._id
+          id:user._id,
+          role:user.role
         }
 
         let token = jwt.sign(tokenData , env.SECRET , {
