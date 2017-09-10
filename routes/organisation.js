@@ -47,11 +47,10 @@ router.get('/upload', function(req, res){
           }
         }
         Donor.createDonor(newDonor , callback);
-        
+
       })
       .on("end", function(){
            console.log("done");
-           res.send("Successfully Completed")
       });
 
   stream.pipe(csvStream);

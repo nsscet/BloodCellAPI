@@ -1,11 +1,13 @@
 var express = require('express')
 var router = express.Router();
 var Donation = require('../app/models/donation')
-
+var Donor = require('../app/models/donor');
 var verifyToken = require('../app/middleware/verifyToken');
+var allowAccess = require('../app/middleware/allowAccess');
 
 router.use(function(req,res,next){
   verifyToken(req , res , next)
+  allowAccess(req, res, next, 'donation')
 });
 
 
@@ -15,12 +17,12 @@ router.route('/donation')
 
   newDonation.donorId = req.body.donorId
   newDonation.hospitalId = req.body.hospitalId
-  newDonation.dateOfDonation = req.body.dateOfDonation
+  newDonation.dateOfDonation = new Date(req.body.dateOfDonation)
   newDonation.typeOfDonation = req.body.typeOfDonation
 
   var lastDonation = {
     typeOfDonation: req.body.typeOfDonation,
-    dateOfDonation: req.body.dateOfDonation
+    dateOfDonation: new Date(req.body.dateOfDonation)
   }
 
   var callback = function(err , message){
