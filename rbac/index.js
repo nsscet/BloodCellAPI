@@ -1,12 +1,12 @@
 let roles = {
   sadmin: {
-    allowed: ['user', 'donor', 'donation']
+    allowed: ['user', 'donor', 'donation', 'organisation']
   },
   admin: {
     allowed: ['donor' , 'donation']
   },
   organisation:{
-    allowed: ['donor']
+    allowed: ['donor','organisation']
   }
 }
 
