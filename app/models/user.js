@@ -131,3 +131,33 @@ passport.use(new LocalStrategy(
         }
       )
     }
+
+    module.exports.verifyCredentialsApp = function(req, res, next){
+      passport.authenticate('local' ,function(err, user , info){
+        if(err)
+        return next(err);
+
+        if(!user)
+        return res.send({message:"Error authentcating. Username or password is incorrect"})
+
+        req.logIn(user, { session: false }, function(err){
+          if(err){
+            return next(err);
+          }
+
+          //generating JWT
+          var tokenData = {
+            username:user.username,
+            id:user._id,
+            role:user.role
+          }
+
+          let token = jwt.sign(tokenData , env.SECRET , {
+            expiresIn:1440
+          })
+
+          // req.session.accessToken = token;
+          res.send({"message": user.username + " Authenticated" , success: true, token})
+        })
+      })(req,res,next)
+    }
