@@ -141,7 +141,7 @@ passport.use(new LocalStrategy(
     module.exports.verifyCredentialsApp = function(req, res, next){
       passport.authenticate('local' ,function(err, user , info){
         if(err)
-        return nex  t(err);
+        return next(err);
 
         if(!user)
         return res.send({message:"Error authentcating. Username or password is incorrect",success:false})
