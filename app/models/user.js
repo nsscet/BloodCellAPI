@@ -78,10 +78,16 @@ passport.use(new LocalStrategy(
         }
 
         let token = jwt.sign(tokenData , env.SECRET , {
-          expiresIn:1440
+          expiresIn:"4h"
         })
 
+        let basicUserDetails = {
+          name: user.username,
+          role: user.role
+        }
         req.session.accessToken = token;
+        req.session.user = basicUserDetails;
+
         res.send({"message": user.username + " Authenticated" , success: true})
       })
     })(req,res,next)
