@@ -1,7 +1,15 @@
 var fs = require('fs')
 var csv = require('fast-csv')
+var multer = require('multer')
+var upload = multer(
+  {
+  dest: 'uploads',
+  filename: 'data'
+  })
+
 var express = require('express')
 var router = express.Router();
+
 var Organisation = require('../app/models/organisation')
 var Donor = require('../app/models/donor')
 
@@ -11,13 +19,12 @@ var verifyToken = require('../app/middleware/verifyToken');
 var allowAccess = require('../app/middleware/allowAccess');
 
 router.use(function(req,res,next){
-  console.log("Hello");
   verifyToken(req , res , next)
   allowAccess(req, res, next, 'organisation')
 });
 
-router.get('/upload', function(req, res){
-  var stream = fs.createReadStream("org.csv");
+router.post('/upload', upload.single('file'), function(req, res){
+  var stream = fs.createReadStream(req.file.path);
   var csvStream = csv()
       .on("data", function(data){
         var newDonor = new Donor();
@@ -37,24 +44,19 @@ router.get('/upload', function(req, res){
             throw err;
             res.send(message)
           }
-          else{
-            let message = {
-              "message": "New donor was successfully created",
-              "Donor": newDonor
-            }
-            res.send(message)
-
-          }
         }
         Donor.createDonor(newDonor , callback);
 
       })
       .on("end", function(){
            console.log("done");
+           res.send({
+             message: "Successfully added all donors",
+             success: true
+           })
       });
 
   stream.pipe(csvStream);
-  // res.send("Unsuccessful")
 })
 
 module.exports = router
