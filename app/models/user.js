@@ -88,7 +88,7 @@ passport.use(new LocalStrategy(
         req.session.accessToken = token;
         req.session.user = basicUserDetails;
 
-        res.send({"message": user.username + " Authenticated" , success: true})
+        res.send({"message": user.username , success: true})
       })
     })(req,res,next)
   }
@@ -141,7 +141,7 @@ passport.use(new LocalStrategy(
     module.exports.verifyCredentialsApp = function(req, res, next){
       passport.authenticate('local' ,function(err, user , info){
         if(err)
-        return next(err);
+        return nex  t(err);
 
         if(!user)
         return res.send({message:"Error authentcating. Username or password is incorrect",success:false})
