@@ -138,7 +138,7 @@ passport.use(new LocalStrategy(
         return next(err);
 
         if(!user)
-        return res.send({message:"Error authentcating. Username or password is incorrect"})
+        return res.send({message:"Error authentcating. Username or password is incorrect",success:false})
 
         req.logIn(user, { session: false }, function(err){
           if(err){
@@ -157,7 +157,7 @@ passport.use(new LocalStrategy(
           })
 
           // req.session.accessToken = token;
-          res.send({"message": user.username + " Authenticated" , success: true, token})
+          res.send({"message": user.username, success: true, token})
         })
       })(req,res,next)
     }
