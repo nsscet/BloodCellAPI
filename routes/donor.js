@@ -46,8 +46,6 @@ router.route('/donor')
   if(req.session.user.role == 'organisation'){
     query.organisation = req.session.user.name
   }
-
-  // console.log(req.query);
   var callback = function(err , donors){
     if(err){
       let message = {

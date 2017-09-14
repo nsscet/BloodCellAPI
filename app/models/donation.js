@@ -50,6 +50,7 @@ module.exports.createDonation = function(newDonation , callback){
           donors,
           success: true
         }
+        callback(null, message)
       }
     })
   }

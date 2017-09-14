@@ -4,6 +4,7 @@ var Donation = require('../app/models/donation')
 var Donor = require('../app/models/donor');
 var verifyToken = require('../app/middleware/verifyToken');
 var allowAccess = require('../app/middleware/allowAccess');
+var Timestamp = require('mongodb').Timestamp
 
 router.use(function(req,res,next){
   verifyToken(req , res , next)
@@ -17,14 +18,13 @@ router.route('/donation')
 
   newDonation.donorId = req.body.donorId
   newDonation.hospitalId = req.body.hospitalId
-  newDonation.dateOfDonation = new Date(req.body.dateOfDonation)
+  newDonation.dateOfDonation = new Date(req.body.dateOfDonation).setHours(0,0,0,0)
   newDonation.typeOfDonation = req.body.typeOfDonation
 
   var lastDonation = {
     typeOfDonation: req.body.typeOfDonation,
-    dateOfDonation: new Date(req.body.dateOfDonation)
+    dateOfDonation: new Date(req.body.dateOfDonation).setHours(0,0,0,0)
   }
-
   var callback = function(err , message){
     if(err){
       let message = {
@@ -45,8 +45,11 @@ router.route('/donation')
   Donation.createDonation(newDonation , callback);
 })
 .get(function(req, res){
-  console.log(req.query);
+  var query = req.query
+  query.dateOfDonation = new Date(query.dateOfDonation.toString()).setHours(0,0,0,0)
+  console.log(query);
   var callback = function(err , message){
+    console.log("inside callback");
     if(err){
       let message = {
         "message": "Some error occured."
