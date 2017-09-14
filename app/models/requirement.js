@@ -4,7 +4,7 @@ var Schema = mongoose.Schema
 
 var requirementSchema = new mongoose.Schema(
   {
-      organisationId: {
+      hospitalId: {
         type:String,
         required:true
       },
@@ -18,11 +18,11 @@ var requirementSchema = new mongoose.Schema(
       },
       isClosed: {
         type: Boolean,
-        required: true
+        default: false
       },
       timeOfPosting: {
         type: Date,
-        required: true
+        default: Date.now()
       },
       typeOfRequirement: {
         type: String,
@@ -36,3 +36,25 @@ var requirementSchema = new mongoose.Schema(
 )
 
 var User = module.exports = mongoose.model('Requirement' , requirementSchema);
+
+module.exports.getRequirements = (query, callback) => {
+  Requirement.find(query, function(err, requirements){
+    if(err){
+      callback(err, null)
+    }
+    else{
+      callback(null, requirements)
+    }
+  })
+}
+
+module.exports.addRequirement = (requirement, callback) => {
+  requirement.save((err) => {
+    if(err){
+      callback(err, null)
+    }
+    else{
+      callback(null, requirement)
+    }
+  })
+}

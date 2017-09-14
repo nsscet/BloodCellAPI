@@ -53,7 +53,7 @@ var donorRoutes = require('./routes/donor.js')
 var donationRoutes = require('./routes/donation.js')
 var appRoutes = require('./routes/app.js')
 var organisationRoutes = require('./routes/organisation.js')
-var requestRoutes = require('./routes/request.js')
+var requirementRoutes = require('./routes/request.js')
 
 app.use(passport.initialize());
 
@@ -70,7 +70,7 @@ app.use('/api/admin', donationRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/app', appRoutes)
 app.use('/api', organisationRoutes)
-app.use('/api/admin', requestRoutes)
+app.use('/api/admin', requirementRoutes)
 
 //server
 var port = env.PORT || 8080;
