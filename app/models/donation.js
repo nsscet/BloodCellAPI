@@ -33,9 +33,23 @@ module.exports.createDonation = function(newDonation , callback){
     if(err){
       callback(err , null)
     }
-    
+
     else{
       callback(null , newDonation)
     }
   });
+  }
+
+  module.exports.getDonations = function(query, callback){
+    Donation.find(query, function(err, donors){
+      if(err)
+        return callback(err, null)
+      else{
+        let message = {
+          count:donors.length,
+          donors,
+          success: true
+        }
+      }
+    })
   }

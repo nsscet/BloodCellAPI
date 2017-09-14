@@ -44,5 +44,22 @@ router.route('/donation')
   Donor.updateLastDonation(newDonation.donorId , lastDonation);
   Donation.createDonation(newDonation , callback);
 })
+.get(function(req, res){
+  console.log(req.query);
+  var callback = function(err , message){
+    if(err){
+      let message = {
+        "message": "Some error occured."
+      }
+      throw err;
+      res.send(message)
+    }
+    else{
+      res.send(message)
+    }
+  }
+
+  Donation.getDonations(req.query, callback)
+})
 
 module.exports = router
