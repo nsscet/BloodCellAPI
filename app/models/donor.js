@@ -42,6 +42,10 @@ var DonorSchema = new Schema({
     dateOfDonation: {
       type: String
     }
+  },
+  dateAdded: {
+    type: String,
+    default: new Date().setHours(0,0,0,0)
   }
 })
 

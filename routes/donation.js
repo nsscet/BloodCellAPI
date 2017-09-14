@@ -46,7 +46,8 @@ router.route('/donation')
 })
 .get(function(req, res){
   var query = req.query
-  query.dateOfDonation = new Date(query.dateOfDonation.toString()).setHours(0,0,0,0)
+  if(query.dateOfDonation)
+    query.dateOfDonation = new Date(query.dateOfDonation.toString()).setHours(0,0,0,0)
   console.log(query);
   var callback = function(err , message){
     console.log("inside callback");

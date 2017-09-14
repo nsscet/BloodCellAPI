@@ -35,7 +35,7 @@ var requirementSchema = new mongoose.Schema(
   }
 )
 
-var User = module.exports = mongoose.model('Requirement' , requirementSchema);
+var Requirement = module.exports = mongoose.model('Requirement' , requirementSchema);
 
 module.exports.getRequirements = (query, callback) => {
   Requirement.find(query, function(err, requirements){

@@ -21,6 +21,7 @@ router.route('/donor')
   newDonor.bloodGroup = req.body.bloodGroup
   newDonor.donorId = req.body.donorId
   newDonor.organisation = req.body.organisation
+  newDonor.dateAdded = new Date().setHours(0,0,0,0)
 
   var callback = function(err , newDonor){
     if(err){
@@ -46,6 +47,8 @@ router.route('/donor')
   if(req.session.user.role == 'organisation'){
     query.organisation = req.session.user.name
   }
+  if(query.dateAdded)
+    query.dateAdded = new Date(query.dateAdded).setHours(0,0,0,0)
   var callback = function(err , donors){
     if(err){
       let message = {
@@ -56,6 +59,7 @@ router.route('/donor')
     }
     else{
       let message = {
+        count: donors.length,
         "message": "Donors were successfully returned",
         "Donors": donors
       }
