@@ -2,7 +2,7 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
-var OrganisationSchema = new mongoose.Schema(
+var requirementSchema = new mongoose.Schema(
   {
       organisationId: {
         type:String,
@@ -35,4 +35,4 @@ var OrganisationSchema = new mongoose.Schema(
   }
 )
 
-var User = module.exports = mongoose.model('Organisation' , OrganisationSchema);
+var User = module.exports = mongoose.model('Requirement' , requirementSchema);
