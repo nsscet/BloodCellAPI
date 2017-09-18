@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router();
 var User = require('../app/models/user')
 
-var verifyToken = require('../app/middleware/verifyToken');
+// var verifyToken = require('../app/middleware/verifyToken');
 
 router.route('/users')
 .get(function(req,res){
