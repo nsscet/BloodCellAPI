@@ -59,7 +59,7 @@ app.use(passport.initialize());
 
 //set Headers
 app.use(cors({
-  origin: 'http://localhost:8080',
+    origin:[ 'http://localhost:8080','http://bloodcellcet.tk' ],
   credentials: true
 }));
 
