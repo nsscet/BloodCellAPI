@@ -14,7 +14,10 @@ router.route('/users')
       for(index in users){
         users[index].password = "password"
       }
-      res.send(users.toString());
+      res.send({
+        users: users.toString(),
+        count: users.length
+      });
     }
   });
 })
