@@ -139,6 +139,7 @@ passport.use(new LocalStrategy(
     }
 
     module.exports.verifyCredentialsApp = function(req, res, next){
+      console.log(req.data);
       passport.authenticate('local' ,function(err, user , info){
         if(err)
         return next(err);
@@ -162,7 +163,7 @@ passport.use(new LocalStrategy(
             expiresIn:1440
           })
 
-          // req.session.accessToken = token;
+          req.session.accessToken = token;
           res.send({"message": user.username, success: true, token})
         })
       })(req,res,next)

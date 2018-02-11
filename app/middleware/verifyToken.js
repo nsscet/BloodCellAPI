@@ -2,6 +2,7 @@ var jwt = require('jsonwebtoken');
 var env = require('../../env')
 
 module.exports = function(req,res,next) {
+  console.log(req.session);
   var token =  req.session.accessToken || req.body.token || req.query.token || req.params.token;
     if (token) {
     // verifies secret and checks exp
