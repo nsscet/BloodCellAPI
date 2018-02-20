@@ -6,5 +6,7 @@ module.exports = {
 
       PORT : '',
 
-      COOKIE_KEY: ''
+      COOKIE_KEY: '',
+
+      API_URL: ''
 }
