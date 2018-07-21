@@ -5,7 +5,9 @@
   "description": "An API for the NSS Blood Cell CET",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint ./ --report-unused-disable-directives --format 'node_modules/eslint-friendly-formatter'",
+    "lint--fix": "./node_modules/.bin/eslint ./ --fix --report-unused-disable-directives --format 'node_modules/eslint-friendly-formatter'"
   },
   "repository": {
     "type": "git",
@@ -44,6 +46,13 @@
   "devDependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
+    "eslint": "^5.2.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
     "morgan": "^1.8.2"
   }
 }

@@ -3,15 +3,15 @@ let roles = {
     allowed: ['user', 'donor', 'donation', 'organisation', 'requirement']
   },
   admin: {
-    allowed: ['donor' , 'donation', 'requirement']
+    allowed: ['donor', 'donation', 'requirement']
   },
-  organisation:{
-    allowed: ['donor','organisation']
+  organisation: {
+    allowed: ['donor', 'organisation']
   }
 }
 
-function can(role, resource){
-  return this.roles[role] && this.roles[role].allowed.indexOf(resource) !== -1;
+function can (role, resource) {
+  return this.roles[role] && this.roles[role].allowed.indexOf(resource) !== -1
 }
 
 module.exports = {
