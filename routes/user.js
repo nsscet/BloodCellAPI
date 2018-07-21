@@ -31,11 +31,13 @@ router.route('/users')
     throw err;
 
     if(message)
-    res.send(message)
+      if(user){
+        res.send({ message, user })
+      }else
+        res.send(message)
 
-    if(user){
-      res.send({ message, user })
-    }
+    
+    
   }
   User.createUser(user , callback);
 });
