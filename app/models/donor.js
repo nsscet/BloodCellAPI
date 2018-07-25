@@ -19,6 +19,14 @@ var DonorSchema = new Schema({
   organisation: {
     type: String
   },
+  branch:{
+    type:String,
+    required: true
+  },
+  year_joined:{
+    type:Number,
+    required: true
+  },
   place: {
     type: String,
     required: true

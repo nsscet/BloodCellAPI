@@ -22,7 +22,8 @@ router.route('/donor')
     newDonor.donorId = req.body.donorId
     newDonor.organisation = req.body.organisation
     newDonor.dateAdded = new Date().setHours(0, 0, 0, 0)
-
+    newDonor.year_joined = req.body.yearOfJoin
+    newDonor.branch = req.body.branch
     var callback = function (err, newDonor) {
       if (err) {
         let message = {
