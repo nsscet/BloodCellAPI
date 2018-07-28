@@ -35,6 +35,8 @@ router.post('/upload', upload.single('file'), function (req, res) {
       newDonor.bloodGroup = data[4]
       newDonor.donorId = data[5]
       newDonor.organisation = data[6]
+      newDonor.year_joined = data[7]
+      newDonor.branch = data[8]
 
       var callback = function (err, newDonor) {
         if (err) {
