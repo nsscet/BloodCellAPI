@@ -19,7 +19,8 @@ module.exports = (req, res, next, resource) => {
       }
     })
   } else {
-    return res.status(403).send({
+     res.status(403)
+    return res.send({
       'error': true,
       'message': 'Token not found'
     })

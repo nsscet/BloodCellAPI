@@ -4,7 +4,7 @@ var passport = require('passport')
 var acl = require('acl')
 
 var User = require('../app/models/user')
-// var verifyToken = require('../app/middleware/verifyToken');
+var verifyToken = require('../app/middleware/verifyToken');
 var router = express.Router()
 
 router.get('/', function (req, res) {
