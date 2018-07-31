@@ -86,7 +86,7 @@ module.exports.verifyCredentials = function (req, res, next) {
       req.session.accessToken = token
       req.session.user = basicUserDetails
 
-      res.send({'message': user.username, success: true})
+      res.send({'message': user.username,'role':user.role, success: true})
     })
   })(req, res, next)
 }
