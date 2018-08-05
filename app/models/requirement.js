@@ -61,7 +61,6 @@ module.exports.closeRequirement = (query, updatedValue, callback) => {
     if (err) {
       callback(err)
     } else {
-      console.log('Requirements Closed')
       callback(err)
     }
   })
