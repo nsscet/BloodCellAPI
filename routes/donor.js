@@ -50,9 +50,9 @@ router.route('/donor')
     var callback = function (err, donors) {
       if (err) {
         let message = {
-          'message': 'Some error occured.'
+          'message': 'Some error occured.',
+          'error':err
         }
-        throw err
         res.send(message)
       } else {
         let message = {
