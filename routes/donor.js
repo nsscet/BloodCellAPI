@@ -27,14 +27,15 @@ router.route('/donor')
     var callback = function (err, newDonor) {
       if (err) {
         let message = {
-          'message': 'Some error occured.'
+          'message': 'Some error occured.',
+          'err':err
         }
-        throw err
         res.send(message)
       } else {
         let message = {
           'message': 'New donor was successfully created',
-          'Donor': newDonor
+          'Donor': newDonor,
+          'err': 'No Error'
         }
         res.send(message)
       }

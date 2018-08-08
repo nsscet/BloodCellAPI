@@ -19,7 +19,7 @@ router.route('/donation')
     newDonation.hospitalId = req.body.hospitalId
     newDonation.dateOfDonation = new Date(req.body.dateOfDonation).setHours(0, 0, 0, 0)
     newDonation.typeOfDonation = req.body.typeOfDonation
-
+    newDonation.voluntary = req.body.voluntary
     var lastDonation = {
       typeOfDonation: req.body.typeOfDonation,
       dateOfDonation: new Date(req.body.dateOfDonation).setHours(0, 0, 0, 0)

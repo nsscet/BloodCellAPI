@@ -18,6 +18,9 @@ var Donation = new Schema({
   typeOfDonation: {
     type: String,
     required: true
+  },voluntary:{
+    type:Boolean,
+    required:true
   },
   coupouns: {
     type: [],
