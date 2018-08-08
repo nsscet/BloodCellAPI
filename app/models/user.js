@@ -92,6 +92,7 @@ module.exports.verifyCredentials = function (req, res, next) {
 }
 
 module.exports.createUser = function (newUser, callback) {
+  console.log(newUser);
   User.findOne(
     { username: newUser.username },
     function (err, user) {

@@ -38,6 +38,11 @@ router.route('/requirements')
     Requirement.getRequirements(req.query, callback)
   })
   .post((req, res) => {
+    if(!(req.session.user.role === 'sadmin' || req.session.user.role === 'hospitals')){
+      return res.status(304).send({
+        message:'not authorised'
+      })
+    }
     var requirement = new Requirement()
     requirement.hospitalId = req.body.hospitalId
     requirement.bloodGroup = req.body.bloodGroup
