@@ -65,6 +65,27 @@ router.route('/donor')
       }
     }
     Donor.getDonors(query, callback)
+  }).put(function(req,res){
+    var query = {}
+    query.mobileNumber = req.body.mobileNo
+    query.remark = req.body.remark
+    var callback = function (err) {
+      if (err) {
+        let message = {
+          'message': 'Some error occured.',
+          'status':err
+        }
+        res.send(message)
+      } else {
+        let message = {
+          'message': 'Remarks Were Updated',
+          'status':'Success'
+        }
+        res.send(message)
+      }
+    }
+
+    Donor.updateRemarks(query,callback)
   })
 
 module.exports = router

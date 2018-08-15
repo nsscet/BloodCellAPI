@@ -67,17 +67,18 @@ router.route('/requirements')
     }
     Requirement.addRequirement(requirement, callback)
   }).put((req, res) => {
+    console.log(req.body)
     var query = {hospitalId: req.body.hospitalId,
       bloodGroup: req.body.bloodGroup,
-      quantity: req.body.quantity,
       typeOfRequirement: req.body.typeOfRequirement,
       patientId: req.body.patientId,
       timeOfPosting: req.body.timeOfPosting
     }
-    var updatedValue = { $set: {isClosed: true}}
+    var updatedValue = { $set: {isClosed: req.body.isClosed,
+                                quantity: req.body.quantity,}
+                        }
     var callback = (err) => {
       if (err) {
-        throw err
         res.send({
           success: false,
           message: 'Some error occured'
@@ -85,11 +86,11 @@ router.route('/requirements')
       } else {
         res.send({
           success: true,
-          message: 'Requirement Closed'
+          message: 'Requirement Updated'
         })
       }
     }
-    Requirement.closeRequirement(query, updatedValue, callback)
+    Requirement.updateRequirement(query, updatedValue, callback)
   })
 
 module.exports = router

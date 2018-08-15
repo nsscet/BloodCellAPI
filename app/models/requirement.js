@@ -17,8 +17,8 @@ var requirementSchema = new mongoose.Schema(
       required: true
     },
     isClosed: {
-      type: Boolean,
-      default: false
+      type: Number,
+      default: 0
     },
     timeOfPosting: {
       type: Date,
@@ -56,7 +56,7 @@ module.exports.addRequirement = (requirement, callback) => {
     }
   })
 }
-module.exports.closeRequirement = (query, updatedValue, callback) => {
+module.exports.updateRequirement = (query, updatedValue, callback) => {
   Requirement.updateOne(query, updatedValue, (err, res) => {
     if (err) {
       callback(err)

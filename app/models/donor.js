@@ -21,11 +21,9 @@ var DonorSchema = new Schema({
   },
   branch:{
     type:String,
-    required: true
   },
   year_joined:{
     type:Number,
-    required: true
   },
   place: {
     type: String,
@@ -41,7 +39,7 @@ var DonorSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'No status yet!!'
+    default: ''
   },
   lastDonation: {
     typeOfDonation: {
@@ -154,4 +152,18 @@ module.exports.updateLastDonation = function (donorId, lastDonation) {
   Donor.findOneAndUpdate({ donorId }, update, function (err, donor) {
     console.log(donor)
   })
+}
+
+module.exports.updateRemarks = function(query,callback){
+  var update = { 'status':query.remark} 
+  var mobileNumber = query.mobileNumber
+  Donor.findOneAndUpdate({mobileNumber},update,function(err,donor){
+    if(err)
+      callback(err)
+    else{
+      callback()
+
+    }  
+  })
+
 }
