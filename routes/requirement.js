@@ -49,7 +49,8 @@ router.route('/requirements')
     requirement.quantity = req.body.quantity
     requirement.typeOfRequirement = req.body.typeOfRequirement
     requirement.patientId = req.body.patientId
-
+    requirement.remarks = req.body.remarks
+    requirement.contactNo = req.body.contactNo
     var callback = (err, requirement) => {
       if (err) {
         throw err

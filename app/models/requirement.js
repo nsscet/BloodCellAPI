@@ -31,6 +31,13 @@ var requirementSchema = new mongoose.Schema(
     patientId: {
       type: String,
       required: true
+    },
+    contactNo:{
+      type:Number,
+      required: true
+    },
+    remarks:{
+      type:String
     }
   }
 )
