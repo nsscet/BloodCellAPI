@@ -73,10 +73,12 @@ router.route('/requirements')
       bloodGroup: req.body.bloodGroup,
       typeOfRequirement: req.body.typeOfRequirement,
       patientId: req.body.patientId,
-      timeOfPosting: req.body.timeOfPosting
+      timeOfPosting: req.body.timeOfPosting,
+      contactNo:req.body.contactNo
     }
     var updatedValue = { $set: {isClosed: req.body.isClosed,
-                                quantity: req.body.quantity,}
+                                quantity: req.body.quantity,
+                                remarks:req.body.remarks}
                         }
     var callback = (err) => {
       if (err) {
