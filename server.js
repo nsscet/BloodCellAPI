@@ -55,6 +55,7 @@ var appRoutes = require('./routes/app.js')
 var organisationRoutes = require('./routes/organisation.js')
 var requirementRoutes = require('./routes/requirement.js')
 var getRequirement = require('./routes/public/index')
+var hospitalRoute = require('./routes/hospital.js')
 app.use(passport.initialize())
 
 // set Headers
@@ -72,6 +73,7 @@ app.use('/api/app', appRoutes)
 app.use('/api', organisationRoutes)
 app.use('/api/admin', requirementRoutes)
 app.use('/public',getRequirement)
+app.use('/api/admin',hospitalRoute)
 // server
 var port = env.PORT || 3000
 app.listen(port)
