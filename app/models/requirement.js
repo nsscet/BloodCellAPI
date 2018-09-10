@@ -1,9 +1,12 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 var childSchema = new Schema({
-    donorId: {
-        type: String
-    }
+    donorId: { type: String },
+    name: { type: String },
+    bloodGroup: { type: String },
+    mobileNumber: { type: Number },
+    branch: { type: String },
+    yearJoined: { type: Number }
 })
 var requirementSchema = new mongoose.Schema({
     hospitalId: {
@@ -82,7 +85,7 @@ module.exports.linkDonor = (query, value, callback) => {
 
             requirement.children.push(value)
             requirement.save((err) => {
-                console.log(err)
+                // console.log(err)
             })
 
         } catch (error) {
@@ -95,5 +98,5 @@ module.exports.linkDonor = (query, value, callback) => {
 
 }
 module.exports.deLinkDonor = (query, donorId, callback) => {
-    Requirement.update(query, { "$pull": { children: { "donorId": donorId } } }, callback)
+    Requirement.update(query, { "$pull": { children: donorId } }, callback)
 }

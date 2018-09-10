@@ -99,7 +99,7 @@ router.route('/requirements')
         }
         Requirement.updateRequirement(query, updatedValue, callback)
     })
-router.route('/requirements/:id')
+router.route('/linkrequirements')
     .put((req, res) => {
         var query = {
             "hospitalId": req.body.hospitalId,
@@ -108,9 +108,7 @@ router.route('/requirements/:id')
             "patientId": req.body.patientId,
             "contactNo": req.body.contactNo
         }
-        var updatedValue = {
-            donorId: req.params.id
-        }
+        var updatedValue = req.body.donor
         var callback = (err) => {
             if (err) {
                 res.send({ "Status": false, "Error": err })
@@ -122,7 +120,7 @@ router.route('/requirements/:id')
         Requirement.linkDonor(query, updatedValue, callback)
     }).delete((req, res) => {
         // var donorId = { "donorId": req.params.id }
-        var donorId = req.params.id
+        var donorId = req.body.donor
         var query = {
             "hospitalId": req.body.hospitalId,
             "bloodGroup": req.body.bloodGroup,
