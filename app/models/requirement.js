@@ -61,13 +61,27 @@ module.exports.getRequirements = (query, callback) => {
 }
 
 module.exports.addRequirement = (requirement, callback) => {
-    requirement.save((err) => {
-        if (err) {
-            callback(err, null)
-        } else {
-            callback(null, requirement)
-        }
+    var query = {}
+    query.hospitalId = requirement.hospitalId
+    query.bloodGroup = requirement.bloodGroup
+    query.quantity = requirement.quantity
+    query.typeOfRequirement = requirement.typeOfRequirement
+    query.patientId = requirement.patientId
+    query.contactNo = requirement.contactNo
+    Requirement.find(query, function(err, requirements) {
+        if (requirements) {
+            const error = "Duplicate requirement"
+            callback(error, null)
+        } else
+            requirement.save((err) => {
+                if (err) {
+                    callback(err, null)
+                } else {
+                    callback(null, requirement)
+                }
+            })
     })
+
 }
 module.exports.updateRequirement = (query, updatedValue, callback) => {
     Requirement.updateOne(query, updatedValue, (err, res) => {

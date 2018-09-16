@@ -39,7 +39,6 @@ router.route('/hospital')
         Hospitals.getHospitals(req.query, callback)
 
     }).post(function(req, res) {
-        console.log("Hello1")
 
         var newhospital = new Hospitals()
         newhospital.name = req.body.name

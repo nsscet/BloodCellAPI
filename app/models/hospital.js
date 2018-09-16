@@ -17,7 +17,8 @@ var Hospital = new Schema({
     },
     contactNo: {
         type: Number,
-        unique: true
+        unique: true,
+        required: true
     }
 })
 

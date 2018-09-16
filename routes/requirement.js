@@ -53,7 +53,6 @@ router.route('/requirements')
         requirement.contactNo = req.body.contactNo
         var callback = (err, requirement) => {
             if (err) {
-                throw err
                 res.send({
                     success: false,
                     message: 'Some error occured'
