@@ -43,6 +43,7 @@ router.route('/getrequirements/donations')
                 if (requirements.length > 0) {
                     requirementDonations = []
                    for(i=0;i<requirements.length;i++){
+                    if(requirements[i].isClosed!=0)
                     for(j=0;j<requirements[i].children.length;j++){
                       console.log(requirements[i].children[j])
                       requirements[i].children[j].requirement=requirements[i].hospitalId+"-"+requirements[i].patientId+"-"+requirements[i].contactNo
