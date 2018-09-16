@@ -7,7 +7,7 @@ var childSchema = new Schema({
     mobileNumber: { type: Number },
     branch: { type: String },
     yearJoined: { type: Number },
-    requirement:{type: String}
+    requirement: { type: String }
 })
 var requirementSchema = new mongoose.Schema({
     hospitalId: {
@@ -70,7 +70,7 @@ module.exports.addRequirement = (requirement, callback) => {
     query.patientId = requirement.patientId
     query.contactNo = requirement.contactNo
     Requirement.find(query, function(err, requirements) {
-        if (requirements) {
+        if (requirements.length !== 0) {
             const error = "Duplicate requirement"
             callback(error, null)
         } else

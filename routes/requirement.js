@@ -55,7 +55,8 @@ router.route('/requirements')
             if (err) {
                 res.send({
                     success: false,
-                    message: 'Some error occured'
+                    message: 'Some error occured',
+                    "Error": err
                 })
             } else {
                 res.send({
