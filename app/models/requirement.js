@@ -6,7 +6,8 @@ var childSchema = new Schema({
     bloodGroup: { type: String },
     mobileNumber: { type: Number },
     branch: { type: String },
-    yearJoined: { type: Number }
+    yearJoined: { type: Number },
+    requirement:{type: String}
 })
 var requirementSchema = new mongoose.Schema({
     hospitalId: {
