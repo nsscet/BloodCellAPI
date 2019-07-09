@@ -77,6 +77,7 @@ router.route('/requirements')
             timeOfPosting: req.body.timeOfPosting,
             contactNo: req.body.contactNo
         }
+        console.log(req.body.children)
         var updatedValue = {
             $set: {
                 isClosed: req.body.isClosed,

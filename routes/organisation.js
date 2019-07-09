@@ -28,14 +28,25 @@ router.post('/upload', upload.single('file'), function (req, res) {
   var csvStream = csv()
     .on('data', function (data) {
       var newDonor = new Donor()
+      if(data[0] != '' && data[1] != '' && data[4] != '' &&data[6]!=''&&data[8]!=''){
       newDonor.name = data[0]
       newDonor.mobileNumber = data[1]
       newDonor.place = data[2]
+      if(data[2] == '')
+        newDonor.place = 'null'
       newDonor.email = data[3]
+      if(data[3] == '')
+        newDonor.email = 'null'
       newDonor.bloodGroup = data[4]
       newDonor.donorId = data[5]
+      if(data[5] == '')
+        newDonor.donorId = 'null'
       newDonor.organisation = data[6]
-      newDonor.year_joined = data[7]
+      if(data[7] == '' || isNaN(data[7]))
+        newDonor.year_joined = 0
+      else
+        newDonor.year_joined = Number(data[7])
+
       newDonor.branch = data[8]
 
       var callback = function (err, newDonor) {
@@ -47,7 +58,7 @@ router.post('/upload', upload.single('file'), function (req, res) {
           res.send(message)
         }
       }
-      Donor.createDonor(newDonor, callback)
+      Donor.createDonor(newDonor, callback)}
     })
     .on('end', function () {
       console.log('done')

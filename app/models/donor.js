@@ -4,15 +4,14 @@ var Schema = mongoose.Schema
 var DonorSchema = new Schema({
   donorId: {
     type: String,
-    unique: true,
-    required: true
+
   },
   name: {
     type: String,
     required: true
   },
   mobileNumber: {
-    type: Number,
+    type: String,
     unique: true,
     required: true
   },
@@ -31,7 +30,7 @@ var DonorSchema = new Schema({
   },
   email: {
     type: String,
-    unique: true
+    // unique: true
   },
   bloodGroup: {
     type: String,
